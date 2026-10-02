@@ -74,6 +74,8 @@ stage.addEventListener('click',e=>{
   if(e.target.closest('.ppanel')||e.target.closest('.pair'))return;
   const s=e.target.closest('.spot');if(s)return openProduct(s.dataset.id);
   if(openId&&stagePanel.classList.contains('open'))return closeProduct();
+  const hit=hitItem(e.clientX,e.clientY);
+  if(hit){ripple(e.clientX,e.clientY);return openProduct(hit.id)}
   playing?pause(true):play();
 });
 stage.addEventListener('keydown',e=>{

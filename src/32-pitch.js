@@ -1,5 +1,19 @@
-// ---- hero teaser: a crop of the episode 7 frame with rotating tags
-{
+// ---- hero: with stills, rotate through every identified piece on the real frames; otherwise the illustrated crop
+if(REELS.stills){
+  const R0=REELS.stills,seq=R0.items.filter(i=>i.at[0]&&!i.similar),el=$('#teaser'),tag=$('#heroTag'),bug=$('.teaser-bug',el);
+  el.insertAdjacentHTML('afterbegin',R0.scenes.map((sc,k)=>{const n=sc.shots[0].img,r=frameRect(n);
+    return`<div class="t-slide" data-k="${k}"><svg viewBox="${(r.x*1600).toFixed(1)} 0 ${(r.w*1600).toFixed(1)} 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#fr-${n}"/></svg>${R0.items.filter(i=>i.sc===k&&i.at[0]).map(i=>`<span class="t-spot" data-t="${i.id}" style="left:${(i.at[0][0]*100).toFixed(1)}%;top:${(i.at[0][1]*100).toFixed(1)}%"></span>`).join('')}</div>`}).join(''));
+  let k=0,cur=seq[0];
+  const show=()=>{const it=cur=seq[k];k=(k+1)%seq.length;
+    $$('.t-slide',el).forEach(s=>s.classList.toggle('on',+s.dataset.k===it.sc));
+    $$('.t-spot',el).forEach(s=>s.classList.toggle('on',s.dataset.t===it.id));
+    bug.textContent=`QUEEN OF TEARS${it.ep?' · E'+it.ep:''}`;
+    tag.innerHTML=`<small>${it.brand}</small><b>${it.name}</b><span>Hae-in${it.ep?' · episode '+it.ep:''}</span><i>${it.price==null?'Tap to shop':usd(it.price)}</i>`;
+    tag.classList.remove('pop');void tag.offsetWidth;tag.classList.add('pop')};
+  show();if(!RM)setInterval(show,2400);
+  const open=()=>{setReel('stills');toDemo();openProduct(cur.id)};
+  el.addEventListener('click',open);el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}});
+}else{
   const VB=[460,70,520,650],ids=['s3-blazer','s3-necklace','s3-bag','s3-dress'],el=$('#teaser'),tag=$('#heroTag');
   el.insertAdjacentHTML('afterbegin',`<svg viewBox="${VB.join(' ')}" preserveAspectRatio="xMidYMid slice"><use href="#bg-s3"/><use href="#fg-s3"/></svg>`);
   el.insertAdjacentHTML('beforeend',ids.map(id=>{const[x,y]=geo(itemById[id],0).a;return`<span class="t-spot" data-t="${id}" style="left:${((x*1600-VB[0])/VB[2]*100).toFixed(1)}%;top:${((y*900-VB[1])/VB[3]*100).toFixed(1)}%"></span>`}).join(''));

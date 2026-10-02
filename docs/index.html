@@ -550,6 +550,51 @@ button,.stage,a{touch-action:manipulation;-webkit-tap-highlight-color:transparen
   .quad .qpt{width:104px;font-size:.72rem}
 }
 
+/* hero: real frames cross-fading, a light sweep, and a card that tilts toward the cursor */
+.teaser{perspective:1000px}
+.teaser-frame{cursor:pointer;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .25s ease-out}
+.t-slide{position:absolute;inset:0;opacity:0;transition:opacity .8s}
+.t-slide.on{opacity:1}
+.teaser-bug{z-index:2}
+.teaser-frame::after{content:"";position:absolute;top:0;bottom:0;left:-30%;width:30%;z-index:1;pointer-events:none;background:linear-gradient(100deg,transparent,rgba(255,255,255,.22),transparent);animation:glint 4.8s ease-in-out infinite}
+@keyframes glint{0%,55%{left:-30%}100%{left:110%}}
+.hangtag.pop{animation:tagpop .45s cubic-bezier(.2,1.4,.4,1)}
+@keyframes tagpop{from{transform:rotate(3deg) translateY(10px) scale(.96);opacity:.4}}
+
+/* brand marquee under the hero */
+.marq{display:flex;align-items:center;gap:20px;border-block:1px solid var(--line);padding-block:14px;padding-inline:max(16px,4vw);overflow:hidden}
+.marq-label{flex:none;font:500 .68rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.marq-view{flex:1;min-width:0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marq-track{display:flex;width:max-content;animation:marq 38s linear infinite}
+.marq-track span{font:italic 500 1.5rem/1 var(--display);padding-inline:26px;white-space:nowrap}
+@keyframes marq{to{transform:translateX(-50%)}}
+@media(max-width:700px){.marq{flex-direction:column;align-items:flex-start;gap:10px}.marq-view{width:100%}.marq-track span{font-size:1.25rem;padding-inline:18px}}
+
+/* tap-the-garment: spotlight on hover, ripple on tap */
+.hoverbox{position:absolute;border:1.5px solid var(--st-white);border-radius:8px;box-shadow:0 0 0 200vmax rgba(5,3,8,.34);pointer-events:none;transition:left .16s,top .16s,width .16s,height .16s}
+.hoverbox span{position:absolute;left:-1.5px;bottom:100%;background:var(--st-white);color:var(--st-bg);font:500 11px/1.7 var(--mono);padding:0 7px;border-radius:5px 5px 5px 0;white-space:nowrap;transform-origin:0 100%;transform:scale(var(--inv,1))}
+.stage.scanning .hoverbox,.stage[data-mode=off] .hoverbox{display:none}
+.ripple{position:absolute;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;border:2px solid var(--st-white);pointer-events:none;z-index:4;animation:ripple .6s ease-out forwards}
+@keyframes ripple{to{transform:scale(7);opacity:0}}
+
+/* lookbook */
+.lookbook{margin-top:clamp(28px,4vw,44px)}
+.lb-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 20px;margin-bottom:14px}
+.lb-head h3{font:500 1.6rem/1.1 var(--display)}
+.lb-stats{font:400 .74rem var(--mono);color:var(--st-ink-2)}
+.lb-strip{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(170px,1fr);gap:14px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x proximity}
+.lb-card{scroll-snap-align:start;text-align:left;display:grid;gap:10px;align-content:start;min-width:0}
+.lb-img{position:relative;display:block;aspect-ratio:4/5;border-radius:14px;overflow:hidden;background:var(--st-surface)}
+.lb-img svg{position:absolute;inset:0;width:100%;height:100%;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.lb-card:hover .lb-img svg,.lb-card:focus-visible .lb-img svg{transform:scale(1.06)}
+.lb-img em{position:absolute;left:8px;bottom:8px;font:500 .66rem var(--mono);font-style:normal;background:var(--st-accent);color:var(--st-accent-ink);padding:2px 8px;border-radius:999px}
+.lb-meta{display:grid;gap:1px;min-width:0}
+.lb-meta small{font:500 .64rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--st-accent)}
+.lb-meta b{font-weight:600;font-size:.92rem;line-height:1.25}
+.lb-meta span{font-size:.78rem;color:var(--st-ink-2)}
+@media(max-width:700px){.lb-strip{grid-auto-columns:58vw;margin-inline:calc(-1 * max(16px,4vw));padding-inline:max(16px,4vw)}}
+@media (prefers-reduced-motion:reduce){.marq-track,.teaser-frame::after,.hangtag.pop{animation:none!important}.marq-view{overflow-x:auto}}
+
 </style>
 <header class="nav"><div class="wrap">
   <a class="logo" href="#top"><span class="logo-mark" aria-hidden="true"></span>mina</a>
@@ -568,11 +613,13 @@ button,.stage,a{touch-action:manipulation;-webkit-tap-highlight-color:transparen
     <div class="cta-row"><a class="btn" href="#demo">Try the demo</a><a class="btn ghost" href="#business">See the business</a></div>
     <p class="note">Concept prototype, shown with looks from <i>Queen of Tears</i>. The player below is a simulation.</p>
   </div>
-  <div class="teaser" aria-hidden="true">
-    <div class="teaser-frame" id="teaser"><span class="teaser-bug">QUEEN OF TEARS · E7</span></div>
+  <div class="teaser">
+    <div class="teaser-frame" id="teaser" role="button" tabindex="0" aria-label="Open this look in the demo"><span class="teaser-bug">QUEEN OF TEARS · E7</span></div>
     <div class="hangtag" id="heroTag"><small>Balmain</small><b>Double-breasted wool blazer</b><span>Hae-in · episode 7</span><i>$2,595</i></div>
   </div>
 </div></section>
+
+<div class="marq" id="marqWrap" hidden><span class="marq-label">Spotted in the demo reel</span><div class="marq-view"><div class="marq-track" id="marq"></div></div></div>
 
 <section id="problem"><div class="wrap">
   <div class="sec-head">
@@ -611,7 +658,7 @@ button,.stage,a{touch-action:manipulation;-webkit-tap-highlight-color:transparen
     <div>
       <p class="eyebrow">Interactive demo</p>
       <h2>Press pause. <em>Tap the look.</em></h2>
-      <p class="lede">Moments from <i>Queen of Tears</i> in a simulated player. Pause to scan the frame, tap any tag, switch the whole outfit to a budget version, then follow a piece to the store.</p>
+      <p class="lede">Moments from <i>Queen of Tears</i> in a simulated player. Tap a garment or its tag, pause to scan the frame, switch the whole outfit to a budget version, then follow a piece to the store.</p>
     </div>
     <div class="room-tools">
       <div class="seg" role="group" aria-label="Device" id="deviceSeg">
@@ -644,6 +691,7 @@ button,.stage,a{touch-action:manipulation;-webkit-tap-highlight-color:transparen
           <div class="cam" id="cam">
             <svg class="art" id="artFg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
             <div class="dim"></div>
+            <div class="hoverbox" id="hoverBox" hidden><span></span></div>
             <div class="scanlayer" id="scanLayer"></div>
             <div class="spots" id="spots"></div>
           </div>
@@ -700,6 +748,10 @@ button,.stage,a{touch-action:manipulation;-webkit-tap-highlight-color:transparen
       <div class="comp-detail" id="compDetail" hidden><button class="back" data-close>← All looks</button><div class="pc" id="compDetailBody"></div></div>
       <div class="comp-pair" id="compPair" hidden><div><b id="pairTitle">Pairing</b><span id="pairText"><span class="spin"></span>Connecting to Living Room TV</span></div></div>
     </div>
+  </div>
+  <div class="lookbook">
+    <div class="lb-head"><h3>Every look in the reel</h3><p class="lb-stats" id="lbStats"></p></div>
+    <div class="lb-strip" id="lbStrip"></div>
   </div>
   <p class="room-note">Outfits are the ones fashion press identified for each episode. Timecodes, match scores and the cheaper retailers are simulated.</p>
 
@@ -1442,6 +1494,8 @@ stage.addEventListener('click',e=>{
   if(e.target.closest('.ppanel')||e.target.closest('.pair'))return;
   const s=e.target.closest('.spot');if(s)return openProduct(s.dataset.id);
   if(openId&&stagePanel.classList.contains('open'))return closeProduct();
+  const hit=hitItem(e.clientX,e.clientY);
+  if(hit){ripple(e.clientX,e.clientY);return openProduct(hit.id)}
   playing?pause(true):play();
 });
 stage.addEventListener('keydown',e=>{
@@ -1485,8 +1539,22 @@ companion.addEventListener('mouseleave',()=>{if(!openId)setHL(null)});
  card.addEventListener('touchend',e=>{if(y0==null)return;const dy=e.changedTouches[0].clientY-y0;card.style.transform='';y0=null;if(dy>90)closeProduct()});}
 new IntersectionObserver(es=>{inView=es[0].isIntersecting},{threshold:.15}).observe(stage);
 
-// ---- hero teaser: a crop of the episode 7 frame with rotating tags
-{
+// ---- hero: with stills, rotate through every identified piece on the real frames; otherwise the illustrated crop
+if(REELS.stills){
+  const R0=REELS.stills,seq=R0.items.filter(i=>i.at[0]&&!i.similar),el=$('#teaser'),tag=$('#heroTag'),bug=$('.teaser-bug',el);
+  el.insertAdjacentHTML('afterbegin',R0.scenes.map((sc,k)=>{const n=sc.shots[0].img,r=frameRect(n);
+    return`<div class="t-slide" data-k="${k}"><svg viewBox="${(r.x*1600).toFixed(1)} 0 ${(r.w*1600).toFixed(1)} 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#fr-${n}"/></svg>${R0.items.filter(i=>i.sc===k&&i.at[0]).map(i=>`<span class="t-spot" data-t="${i.id}" style="left:${(i.at[0][0]*100).toFixed(1)}%;top:${(i.at[0][1]*100).toFixed(1)}%"></span>`).join('')}</div>`}).join(''));
+  let k=0,cur=seq[0];
+  const show=()=>{const it=cur=seq[k];k=(k+1)%seq.length;
+    $$('.t-slide',el).forEach(s=>s.classList.toggle('on',+s.dataset.k===it.sc));
+    $$('.t-spot',el).forEach(s=>s.classList.toggle('on',s.dataset.t===it.id));
+    bug.textContent=`QUEEN OF TEARS${it.ep?' · E'+it.ep:''}`;
+    tag.innerHTML=`<small>${it.brand}</small><b>${it.name}</b><span>Hae-in${it.ep?' · episode '+it.ep:''}</span><i>${it.price==null?'Tap to shop':usd(it.price)}</i>`;
+    tag.classList.remove('pop');void tag.offsetWidth;tag.classList.add('pop')};
+  show();if(!RM)setInterval(show,2400);
+  const open=()=>{setReel('stills');toDemo();openProduct(cur.id)};
+  el.addEventListener('click',open);el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}});
+}else{
   const VB=[460,70,520,650],ids=['s3-blazer','s3-necklace','s3-bag','s3-dress'],el=$('#teaser'),tag=$('#heroTag');
   el.insertAdjacentHTML('afterbegin',`<svg viewBox="${VB.join(' ')}" preserveAspectRatio="xMidYMid slice"><use href="#bg-s3"/><use href="#fg-s3"/></svg>`);
   el.insertAdjacentHTML('beforeend',ids.map(id=>{const[x,y]=geo(itemById[id],0).a;return`<span class="t-spot" data-t="${id}" style="left:${((x*1600-VB[0])/VB[2]*100).toFixed(1)}%;top:${((y*900-VB[1])/VB[3]*100).toFixed(1)}%"></span>`}).join(''));
@@ -1547,6 +1615,72 @@ new ResizeObserver(()=>{if(openId&&small()===sheet.hidden)closeProduct(true)}).o
 renderCloset();draw(true);
 if(!RM)play();
 requestAnimationFrame(frame);
+
+// ---- tap the garment itself: find the tagged piece under a point on the frame
+function hitItem(cx,cy){
+  if(mode==='off'||scanning)return null;
+  const r=stage.getBoundingClientRect(),cam=camFor(t),fx=((cx-r.left)/r.width-cam.tx)/cam.z,fy=((cy-r.top)/r.height-cam.ty)/cam.z,sc=SCENES[sceneIdx(t)];
+  let best=null,area=9;
+  for(const it of ITEMS){
+    if(it.scene!==sc)continue;const g=geo(it,cam.shot);if(!g)continue;
+    const[x1,y1,x2,y2]=g.b;if(fx<x1||fx>x2||fy<y1||fy>y2)continue;
+    const a=(x2-x1)*(y2-y1);if(a<area){area=a;best=it;best._hb=g.b} // smallest box wins, so a belt beats the dress under it
+  }
+  return best;
+}
+function ripple(cx,cy){
+  const r=stage.getBoundingClientRect(),el=document.createElement('span');
+  el.className='ripple';el.style.left=(cx-r.left)+'px';el.style.top=(cy-r.top)+'px';
+  stage.appendChild(el);el.addEventListener('animationend',()=>el.remove());
+}
+// hover: spotlight the piece under the cursor
+{
+  const hb=$('#hoverBox'),lab=$('span',hb);let raf=0,last=null,pt=null;
+  const hide=()=>{if(last){last=null;hb.hidden=true;stage.classList.remove('hit')}};
+  const upd=()=>{raf=0;
+    const it=pt&&!openId?hitItem(pt[0],pt[1]):null;
+    if(!it)return hide();
+    const[x1,y1,x2,y2]=it._hb;hb.style.cssText=`left:${x1*100}%;top:${y1*100}%;width:${(x2-x1)*100}%;height:${(y2-y1)*100}%`;
+    if(it!==last){last=it;lab.textContent=`${it.short||it.name} · ${it.brand}`;hb.hidden=false;stage.classList.add('hit')}
+  };
+  stage.addEventListener('mousemove',e=>{pt=e.target.closest('.spot,.ppanel,.pair')?null:[e.clientX,e.clientY];if(!raf)raf=requestAnimationFrame(upd)});
+  stage.addEventListener('mouseleave',()=>{pt=null;hide()});
+  stage.addEventListener('click',()=>{pt=null;hide()});
+}
+
+// ---- lookbook: every scene in the default reel as a card that jumps into the demo
+{
+  const R0=REELS[reel],strip=$('#lbStrip');
+  strip.innerHTML=R0.scenes.map((sc,k)=>{
+    const its=R0.items.filter(i=>i.sc===k),brands=[...new Set(its.filter(i=>!i.similar).map(i=>i.brand))];
+    let img;if(sc.figs)img=`<svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#bg-${sc.id}"/><use href="#fg-${sc.id}"/></svg>`;
+    else{const n=sc.shots[0].img,r=frameRect(n);img=`<svg viewBox="${(r.x*1600).toFixed(1)} 0 ${(r.w*1600).toFixed(1)} 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#fr-${n}"/></svg>`}
+    return`<button class="lb-card" data-look="${k}"><span class="lb-img">${img}<em>${its.length} piece${its.length===1?'':'s'}</em></span><span class="lb-meta"><small>${sc.ep?'Episode '+sc.ep:SHOW}</small><b>${sc.name}</b><span>${brands.join(' · ')||'Closest matches'}</span></span></button>`}).join('');
+  strip.addEventListener('click',e=>{const c=e.target.closest('[data-look]');if(!c)return;const sc=R0.scenes[+c.dataset.look];setReel(sc.reel);closeProduct(true);seek(sc.t0+.6);pause(true);toDemo()});
+  const brands=new Set(R0.items.filter(i=>!i.similar).map(i=>i.brand));
+  $('#lbStats').textContent=`${R0.scenes.length} scenes · ${R0.items.length} pieces · ${brands.size} brands identified`;
+  // brand marquee under the hero
+  const names=[...brands];
+  if(names.length>3){$('#marq').innerHTML=[0,1].map(()=>names.map(n=>`<span>${n}</span>`).join('')).join('');$('#marqWrap').hidden=false}
+}
+
+// ---- hero card tilts toward the cursor
+if(!RM&&matchMedia('(hover:hover)').matches){
+  const w=$('.teaser'),f=$('#teaser');
+  w.addEventListener('mousemove',e=>{const r=w.getBoundingClientRect();f.style.setProperty('--ry',(((e.clientX-r.left)/r.width-.5)*10).toFixed(2)+'deg');f.style.setProperty('--rx',((.5-(e.clientY-r.top)/r.height)*8).toFixed(2)+'deg')});
+  w.addEventListener('mouseleave',()=>{f.style.setProperty('--ry','0deg');f.style.setProperty('--rx','0deg')});
+}
+
+// ---- first time the player scrolls into view, show one scan on its own, then carry on playing
+if(!RM){
+  let touched=false;deviceEl.addEventListener('pointerdown',()=>{touched=true},{once:true});
+  const io=new IntersectionObserver(es=>{
+    if(!es[0].isIntersecting)return;io.disconnect();
+    setTimeout(()=>{if(touched||!playing||openId||tourI>=0)return;pause(true);
+      setTimeout(()=>{if(!touched&&!playing&&!openId&&tourI<0)play()},2900)},1400);
+  },{threshold:.6});
+  io.observe(stage);
+}
 
 })();
 </script>

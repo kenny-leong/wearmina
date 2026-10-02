@@ -15,11 +15,13 @@
     <div class="cta-row"><a class="btn" href="#demo">Try the demo</a><a class="btn ghost" href="#business">See the business</a></div>
     <p class="note">Concept prototype, shown with looks from <i>Queen of Tears</i>. The player below is a simulation.</p>
   </div>
-  <div class="teaser" aria-hidden="true">
-    <div class="teaser-frame" id="teaser"><span class="teaser-bug">QUEEN OF TEARS · E7</span></div>
+  <div class="teaser">
+    <div class="teaser-frame" id="teaser" role="button" tabindex="0" aria-label="Open this look in the demo"><span class="teaser-bug">QUEEN OF TEARS · E7</span></div>
     <div class="hangtag" id="heroTag"><small>Balmain</small><b>Double-breasted wool blazer</b><span>Hae-in · episode 7</span><i>$2,595</i></div>
   </div>
 </div></section>
+
+<div class="marq" id="marqWrap" hidden><span class="marq-label">Spotted in the demo reel</span><div class="marq-view"><div class="marq-track" id="marq"></div></div></div>
 
 <section id="problem"><div class="wrap">
   <div class="sec-head">
@@ -58,7 +60,7 @@
     <div>
       <p class="eyebrow">Interactive demo</p>
       <h2>Press pause. <em>Tap the look.</em></h2>
-      <p class="lede">Moments from <i>Queen of Tears</i> in a simulated player. Pause to scan the frame, tap any tag, switch the whole outfit to a budget version, then follow a piece to the store.</p>
+      <p class="lede">Moments from <i>Queen of Tears</i> in a simulated player. Tap a garment or its tag, pause to scan the frame, switch the whole outfit to a budget version, then follow a piece to the store.</p>
     </div>
     <div class="room-tools">
       <div class="seg" role="group" aria-label="Device" id="deviceSeg">
@@ -91,6 +93,7 @@
           <div class="cam" id="cam">
             <svg class="art" id="artFg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
             <div class="dim"></div>
+            <div class="hoverbox" id="hoverBox" hidden><span></span></div>
             <div class="scanlayer" id="scanLayer"></div>
             <div class="spots" id="spots"></div>
           </div>
@@ -147,6 +150,10 @@
       <div class="comp-detail" id="compDetail" hidden><button class="back" data-close>← All looks</button><div class="pc" id="compDetailBody"></div></div>
       <div class="comp-pair" id="compPair" hidden><div><b id="pairTitle">Pairing</b><span id="pairText"><span class="spin"></span>Connecting to Living Room TV</span></div></div>
     </div>
+  </div>
+  <div class="lookbook">
+    <div class="lb-head"><h3>Every look in the reel</h3><p class="lb-stats" id="lbStats"></p></div>
+    <div class="lb-strip" id="lbStrip"></div>
   </div>
   <p class="room-note">Outfits are the ones fashion press identified for each episode. Timecodes, match scores and the cheaper retailers are simulated.</p>
 
