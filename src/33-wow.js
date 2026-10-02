@@ -37,7 +37,7 @@ function ripple(cx,cy){
     const its=R0.items.filter(i=>i.sc===k),brands=[...new Set(its.filter(i=>!i.similar).map(i=>i.brand))];
     let img;if(sc.figs)img=`<svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#bg-${sc.id}"/><use href="#fg-${sc.id}"/></svg>`;
     else{const n=sc.shots[0].img,r=frameRect(n);img=`<svg viewBox="${(r.x*1600).toFixed(1)} 0 ${(r.w*1600).toFixed(1)} 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#fr-${n}"/></svg>`}
-    return`<button class="lb-card" data-look="${k}"><span class="lb-img">${img}<em>${its.length} piece${its.length===1?'':'s'}</em></span><span class="lb-meta"><small>${sc.ep?'Episode '+sc.ep:SHOW}</small><b>${sc.name}</b><span>${brands.join(' · ')||'Closest matches'}</span></span></button>`}).join('');
+    return`<button class="lb-card" data-look="${k}"><span class="lb-img">${img}<em>${its.length} piece${its.length===1?'':'s'}</em></span><span class="lb-meta"><small>Look ${String(k+1).padStart(2,'0')}${sc.ep?' · Episode '+sc.ep:''}</small><b>${sc.name}</b><span>${brands.join(' · ')||'Closest matches'}</span></span></button>`}).join('');
   strip.addEventListener('click',e=>{const c=e.target.closest('[data-look]');if(!c)return;const sc=R0.scenes[+c.dataset.look];setReel(sc.reel);closeProduct(true);seek(sc.t0+.6);pause(true);toDemo()});
   const brands=new Set(R0.items.filter(i=>!i.similar).map(i=>i.brand));
   $('#lbStats').textContent=`${R0.scenes.length} scenes · ${R0.items.length} pieces · ${brands.size} brands identified`;

@@ -7,7 +7,7 @@ read = lambda p: open(p, encoding="utf-8").read()
 part = lambda pat: "\n".join(read(p) for p in sorted(glob.glob(os.path.join(here, "src", pat))))
 
 FONTS = ("https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900"
-         "&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap")
+         "&family=Libre+Franklin:ital,wght@0,400..700;1,400..700&display=swap")
 PUBLIC = "--public" in sys.argv      # standalone page for the live site (docs/)
 STILLS = "--no-stills" not in sys.argv  # --no-stills: illustrated frames only
 frames = {}
