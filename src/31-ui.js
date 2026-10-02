@@ -44,7 +44,7 @@ function closeHandoff(){if(handEl.hidden)return;handEl.hidden=true;handEl.innerH
 
 // ---- guided tour
 const tourEl=$('#tour');let tourI=-1,tourTimer,tourAnim;
-const TOURCFG={stills:{hero:'p1-jacket',t0:.5,ts:13},art:{hero:'s3-blazer',t0:48.5,ts:58.5}};
+const TOURCFG={stills:{hero:'p1-jacket',t0:.5,ts:8.5},art:{hero:'s3-blazer',t0:48.5,ts:58.5}};
 const tc=()=>TOURCFG[reel],th=()=>itemById[tc().hero];
 const TOUR=[
  [()=>'Press play. Mina identifies the show and the exact second you are watching.',()=>{if(!small())setDevice('browser');setMode('dots');setTier(0);showTab('scene');seek(tc().t0);play()},4600],

@@ -1,5 +1,5 @@
 """Concatenate src/ into the single-file page (index.html) and a local preview copy."""
-import base64, glob, json, os, sys
+import base64, glob, io, json, os, sys
 from PIL import Image
 
 here = os.path.dirname(os.path.abspath(__file__))
@@ -8,13 +8,16 @@ part = lambda pat: "\n".join(read(p) for p in sorted(glob.glob(os.path.join(here
 
 FONTS = ("https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900"
          "&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap")
-PUBLIC = "--public" in sys.argv  # public build: illustrated frames only, no stills embedded
+PUBLIC = "--public" in sys.argv      # standalone page for the live site (docs/)
+STILLS = "--no-stills" not in sys.argv  # --no-stills: illustrated frames only
 frames = {}
-if not PUBLIC:
+if STILLS:
     for p in sorted(glob.glob(os.path.join(here, "frames", "*.jpg"))):
-        w, h = Image.open(p).size
-        frames[os.path.splitext(os.path.basename(p))[0]] = {
-            "src": "data:image/jpeg;base64," + base64.b64encode(open(p, "rb").read()).decode(), "w": w, "h": h}
+        im = Image.open(p); w, h = im.size
+        buf = io.BytesIO(); im.convert("RGB").resize((48, max(1, round(48 * h / w)))).save(buf, "JPEG", quality=70)
+        b64 = lambda b: "data:image/jpeg;base64," + base64.b64encode(b).decode()
+        # src = the frame itself; lo = a tiny copy used for the blurred fill behind it
+        frames[os.path.splitext(os.path.basename(p))[0]] = {"src": b64(open(p, "rb").read()), "lo": b64(buf.getvalue()), "w": w, "h": h}
 frames_js = "const FRAMES=" + json.dumps(frames) + ";"
 page = (
     "<title>Mina's App</title>\n"
@@ -29,10 +32,11 @@ SHELL = ('<!doctype html><html lang="en"><head><meta charset="utf-8">'
          "</head><body>\n{page}</body></html>\n")
 
 if PUBLIC:
-    # Standalone page for public hosting (GitHub Pages serves docs/). No stills, and kept out of search results.
-    page = page.replace("Stills are shown for demonstration and belong to the show’s owners; the other frames are original illustrations.",
-                        "Frames are original illustrations.")
-    assert "data:image/jpeg" not in page
+    # Standalone page for public hosting (GitHub Pages serves docs/), kept out of search results.
+    if not STILLS:
+        page = page.replace("Stills are shown for demonstration and belong to the show’s owners; the other frames are original illustrations.",
+                            "Frames are original illustrations.")
+        assert "data:image/jpeg" not in page
     extra = ('<meta name="robots" content="noindex">'
              '<meta name="description" content="Mina\'s App: tap what characters wear on any streaming show. Concept prototype.">')
     os.makedirs(os.path.join(here, "docs"), exist_ok=True)

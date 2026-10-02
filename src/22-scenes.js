@@ -55,7 +55,7 @@ const lin=(id,st)=>`<linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1">${st}
 function buildArt(){
   // every scene of every reel is drawn once; the player shows the ones in the active reel
   const fg=ALL_SCENES.map(sc=>`<g class="scene" data-sid="${sc.id}">`+(sc.figs?`<g id="fg-${sc.id}">${sc.figs.map(figG).join('')}</g>`
-    :sc.shots.map((s,k)=>{const f=FRAMES[s.img],r=frameRect(s.img);return`<g class="shot" data-shot="${sc.id}:${k}"><image id="fr-${sc.id}-${k}" href="${f.src}" x="${(r.x*1600).toFixed(1)}" y="0" width="${(r.w*1600).toFixed(1)}" height="900" preserveAspectRatio="none"/></g>`}).join(''))+`</g>`).join('');
+    :sc.shots.map((s,k)=>`<g class="shot" data-shot="${sc.id}:${k}"><use href="#fr-${s.img}"/></g>`).join(''))+`</g>`).join('');
   const defs=`<defs>`
    +lin('g-s1wall',stop(0,'#F1E4CC')+stop(1,'#D5BF9C'))+lin('g-s1niche',stop(0,'#FFF4D8')+stop(1,'#E9CF9C'))+lin('g-s1floor',stop(0,'#C9B594')+stop(1,'#F0E6D2'))
    +`<linearGradient id="g-s1col" x1="0" x2="1" y1="0" y2="0">${stop(0,'#FBF6EA')+stop(1,'#CDBB9A')}</linearGradient>`
@@ -66,9 +66,10 @@ function buildArt(){
    +`<radialGradient id="g-warm">${stop(0,'#FFE9B4',.55)+stop(1,'#FFE9B4',0)}</radialGradient>`
    +`<pattern id="argyle" width="44" height="56" patternUnits="userSpaceOnUse" x="-22" y="118"><path d="M22,0 L44,28 L22,56 L0,28Z" fill="#8FA0B8" opacity=".5"/><path d="M0,0 L44,56 M44,0 L0,56" stroke="#B9895A" stroke-width="1.5" fill="none"/></pattern>`
    +`<pattern id="stripe" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(-24)"><rect width="10" height="5" fill="#16161A"/><rect y="5" width="10" height="5" fill="#EFE9DC"/></pattern>`
+   +Object.keys(FRAMES).map(n=>{const r=frameRect(n);return`<image id="fr-${n}" href="${FRAMES[n].src}" x="${(r.x*1600).toFixed(1)}" y="0" width="${(r.w*1600).toFixed(1)}" height="900" preserveAspectRatio="none"/>`}).join('')
    +Object.values(GR).join('')+`</defs>`;
   const bg=defs+ALL_SCENES.map(sc=>`<g class="scene" data-sid="${sc.id}">`+(sc.figs?`<g id="bg-${sc.id}">${BG[sc.id]()}</g>`
-    :sc.shots.map((s,k)=>`<g class="shot" data-shot="${sc.id}:${k}"><image href="${FRAMES[s.img].src}" x="-80" y="-45" width="1760" height="990" preserveAspectRatio="xMidYMid slice"/></g>`).join(''))+`</g>`).join('');
+    :sc.shots.map((s,k)=>`<g class="shot" data-shot="${sc.id}:${k}"><image href="${FRAMES[s.img].lo}" x="-80" y="-45" width="1760" height="990" preserveAspectRatio="xMidYMid slice"/></g>`).join(''))+`</g>`).join('');
   return{bg,fg};
 }
 // floating lights / leaves over the backdrop, as plain elements so they animate on the compositor
@@ -85,5 +86,5 @@ function fxHTML(sc){
 function thumb(it){
   const[x1,y1,x2,y2]=geo(it,it.shot).b,id=it.scene.id;
   const cx=(x1+x2)*800,cy=(y1+y2)*450,w=Math.max((x2-x1)*1600,120)*1.3,h=Math.max((y2-y1)*900,120)*1.3;
-  return`<svg viewBox="${(cx-w/2).toFixed(0)} ${(cy-h/2).toFixed(0)} ${w.toFixed(0)} ${h.toFixed(0)}" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${it.fig?`<use href="#bg-${id}"/><use href="#fg-${id}"/>`:`<use href="#fr-${id}-${it.shot}"/>`}</svg>`;
+  return`<svg viewBox="${(cx-w/2).toFixed(0)} ${(cy-h/2).toFixed(0)} ${w.toFixed(0)} ${h.toFixed(0)}" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${it.fig?`<use href="#bg-${id}"/><use href="#fg-${id}"/>`:`<use href="#fr-${it.scene.shots[it.shot].img}"/>`}</svg>`;
 }

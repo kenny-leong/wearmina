@@ -87,7 +87,7 @@ function syncSaves(){
 
 // ---- product card
 function productHTML(it){
-  const note=it.similar?'The exact piece has not been identified, so this is the closest match from a demo retailer.':it.noEp?'Identified by fashion press as worn in the series. Placed in this scene for the demo.':`Identified by fashion press for episode ${it.ep}.`;
+  const note=it.similar?'The exact piece has not been identified, so this is the closest match from a demo retailer.':it.noEp?'Identified by fashion press as worn in the series. Placed in this scene for the demo.':it.ep?`Identified by fashion press for episode ${it.ep}.`:'Identified by fashion press for this look.';
   return`<div class="p-thumb">${thumb(it)}<span class="p-seen">Seen on ${it.who} · ${seen(it)}</span></div>
   <div class="p-meta"><span class="badge ${it.similar?'similar':'exact'}">${it.similar?'Closest match':'Identified'}</span><span class="p-conf">${it.conf}% visual match</span></div>
   <h4>${it.name}</h4><p class="p-brand">${it.brand}</p>

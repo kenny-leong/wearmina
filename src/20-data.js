@@ -2,7 +2,7 @@
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const small=()=>innerWidth<=700;
-const SEG=24, SHOW='Queen of Tears', SITE='wearmina.com';
+const SHOW='Queen of Tears', SITE='wearmina.com';
 const usd=n=>'$'+n.toLocaleString('en-US');
 const slug=s=>s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 function rng(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
@@ -16,32 +16,41 @@ const FIG={
 // Demo retailers (fictional) for unidentified pieces and for the cheaper alternatives.
 const A=(a,b,c)=>[['Dalbit Studio',a],['Line 2',b],['Everyday Mapo',c]];
 
-// A reel is a list of scenes plus the items tagged in them. Each scene runs SEG seconds.
+// A reel is a list of scenes plus the items tagged in them. Each scene runs the reel's seg seconds.
 // shots: dt = start within the scene, z = zoom, cx/cy = frame centre, par = backdrop lag, img = still (stills reel only).
 // base = simulated timecode (s) where the clip starts in its episode.
 const REELS={};
 // ---- stills: real frames supplied in frames/. Tags sit at image fractions: at[shot] = [u,v, boxU1,boxV1,boxU2,boxV2].
-if(FRAMES['pink-wide'])REELS.stills={label:'Stills',
+// Identifications are from published fashion coverage; ep is null where the episode is not pinned down.
+const S2=(a,b,subs)=>({shots:[{dt:0,img:a.img,z:a.z,cx:.5,cy:a.cy,par:.6},{dt:7,img:a.img,z:b.z,cx:.5,cy:b.cy,par:.6}],subs});
+if(FRAMES.valentino)REELS.stills={label:'Stills',seg:14,
  scenes:[
-  {id:'p1',ep:1,base:9*60+42,name:'Queens Department Store, flashback',
-   shots:[{dt:0,img:'pink-wide',z:1.25,cx:.5,cy:.55,par:.6},{dt:10,img:'pink-close',z:1.12,cx:.5,cy:.52,par:.6}],
-   subs:[[1,8,'[department store chatter]'],[11,22,'[soft strings]']]},
-  {id:'p2',ep:null,base:27*60+15,name:'Queens Department Store',
-   shots:[{dt:0,img:'knit',z:1,cx:.5,cy:.5,par:.6},{dt:11,img:'knit',z:1.45,cx:.5,cy:.43,par:.6}],
-   subs:[[1,9,'[heels on marble]'],[12,22,'[piano theme]']]},
+  {id:'p1',ep:1,base:9*60+42,name:'Queens Department Store, flashback',...S2({img:'valentino',z:1.5,cy:.52},{z:1.9,cy:.66},[[1,6,'[department store chatter]'],[8,13,'[soft strings]']])},
+  {id:'p2',ep:null,base:18*60+3,name:'Hae-in’s office',...S2({img:'mcqueen',z:1.5,cy:.48},{z:2,cy:.52},[[1,6,'[office hum, a keyboard clicking]'],[8,13,'[tense pause]']])},
+  {id:'p3',ep:2,base:41*60+26,name:'Business party',...S2({img:'balmain',z:1.5,cy:.46},{z:2,cy:.60},[[1,6,'[string quartet, glasses clinking]'],[8,13,'[crowd murmurs]']])},
+  {id:'p4',ep:1,base:33*60+50,name:'Black tweed and pearls',...S2({img:'chanel',z:1.5,cy:.5},{z:1.9,cy:.72},[[1,6,'[quiet room tone]'],[8,13,'[piano theme]']])},
+  {id:'p5',ep:null,base:52*60+12,name:'Helicopter landing, flashback',...S2({img:'dior',z:1.5,cy:.48},{z:1.6,cy:.72},[[1,6,'[helicopter blades winding down]'],[8,13,'[wind across the field]']])},
+  {id:'p6',ep:3,base:14*60+37,name:'Tweed playsuit',...S2({img:'soonil',z:1.5,cy:.48},{z:1.6,cy:.72},[[1,6,'[door opens]'],[8,13,'[low strings]']])},
  ],
  items:[
-  {id:'p1-jacket',sc:0,who:'Hae-in',name:'Glaze Tweed Light jacket',short:'Tweed jacket',brand:'Valentino',price:null,url:'valentino.com',conf:98,side:'r',shot:1,cat:'apparel',alts:A(240,119,69),at:{0:[.54,.415,.445,.33,.615,.50],1:[.72,.725,.20,.42,.88,1]}},
-  {id:'p1-blouse',sc:0,who:'Hae-in',name:'Georgette bow blouse',short:'Bow blouse',brand:'Valentino',price:null,url:'valentino.com',conf:96,side:'l',shot:1,cat:'apparel',alts:A(110,49,29),at:{1:[.44,.62,.33,.42,.56,.98]}},
-  {id:'p1-skirt',sc:0,who:'Hae-in',name:'Glaze Tweed Light mini skirt',short:'Tweed mini skirt',brand:'Valentino',price:null,url:'valentino.com',conf:95,side:'r',shot:0,cat:'apparel',alts:A(130,59,35),at:{0:[.56,.55,.455,.48,.61,.605]}},
-  {id:'p1-bag',sc:0,who:'Hae-in',name:'Locò small shoulder bag',short:'Locò shoulder bag',brand:'Valentino Garavani',price:null,url:'valentino.com',conf:97,side:'l',shot:0,cat:'acc',alts:A(180,79,39),at:{0:[.50,.653,.455,.62,.545,.69]}},
-  {id:'p2-dress',sc:1,who:'Hae-in',name:'Collared knit mini dress',short:'Knit mini dress',brand:'Dalbit Studio',price:185,similar:1,conf:88,side:'l',shot:0,cat:'apparel',alts:[['Hanok Row',120],['Line 2',69],['Everyday Mapo',45]],at:{0:[.42,.47,.21,.335,.82,.895],1:[.42,.47,.21,.335,.82,.895]}},
-  {id:'p2-belt',sc:1,who:'Hae-in',name:'Square-buckle leather belt',short:'Leather belt',brand:'Hanok Row',price:48,similar:1,conf:85,side:'r',shot:1,cat:'acc',alts:[['Line 2',32],['Seorae Supply',24],['Everyday Mapo',15]],at:{0:[.535,.685,.31,.655,.70,.715],1:[.535,.685,.31,.655,.70,.715]}},
-  {id:'p2-bag',sc:1,who:'Hae-in',name:'Black leather tote',short:'Leather tote',brand:'Sora Sora',price:160,similar:1,conf:83,side:'r',shot:0,cat:'acc',alts:[['Dalbit Studio',110],['Line 2',59],['Everyday Mapo',39]],at:{0:[.815,.89,.69,.83,1,1]}},
+  {id:'p1-jacket',sc:0,who:'Hae-in',name:'Glaze Tweed Light jacket',short:'Tweed jacket',brand:'Valentino',price:null,url:'valentino.com',conf:98,side:'r',shot:1,cat:'apparel',alts:A(240,119,69),at:{0:[.66,.74,.03,.46,.87,1],1:[.66,.74,.03,.46,.87,1]}},
+  {id:'p1-blouse',sc:0,who:'Hae-in',name:'Georgette bow blouse',short:'Bow blouse',brand:'Valentino',price:null,url:'valentino.com',conf:96,side:'l',shot:1,cat:'apparel',alts:A(110,49,29),at:{0:[.42,.68,.27,.46,.56,1],1:[.42,.68,.27,.46,.56,1]}},
+  {id:'p1-studs',sc:0,who:'Hae-in',name:'Pearl stud earrings',brand:'Sora Sora',price:38,similar:1,conf:84,side:'r',shot:0,cat:'acc',alts:[['Line 2',22],['Seorae Supply',16],['Everyday Mapo',9]],at:{0:[.58,.345,.54,.31,.63,.38]}},
+  {id:'p2-blazer',sc:1,who:'Hae-in',name:'Eyelet-embellished wool jacket',short:'Eyelet wool jacket',brand:'Alexander McQueen',price:null,url:'alexandermcqueen.com',conf:97,side:'r',shot:0,cat:'apparel',alts:A(260,129,79),at:{0:[.63,.50,.14,.39,.75,.96],1:[.63,.50,.14,.39,.75,.96]}},
+  {id:'p2-shirt',sc:1,who:'Hae-in',name:'Ruffle bib-front shirt',short:'Ruffle-front shirt',brand:'Ralph Lauren',price:null,url:'ralphlauren.com',conf:95,side:'l',shot:1,cat:'apparel',alts:A(98,49,29),at:{0:[.40,.56,.32,.38,.49,.73],1:[.40,.56,.32,.38,.49,.73]}},
+  {id:'p2-earrings',sc:1,who:'Hae-in',name:'Serpenti earrings',brand:'Bvlgari',price:null,url:'bulgari.com',conf:90,side:'r',shot:0,cat:'acc',alts:A(95,39,19),at:{0:[.51,.33,.33,.30,.53,.37],1:[.51,.33,.33,.30,.53,.37]}},
+  {id:'p3-dress',sc:2,who:'Hae-in',name:'Rhinestone V-neck mini dress',short:'Rhinestone dress',brand:'Balmain',price:null,url:'balmain.com',conf:97,side:'r',shot:0,cat:'apparel',alts:A(230,109,65),at:{0:[.63,.70,.23,.44,.83,1],1:[.60,.62,.23,.44,.83,1]}},
+  {id:'p3-earrings',sc:2,who:'Hae-in',name:'Eclat earrings',brand:'Korloff',price:null,url:'korloff.com',conf:92,side:'r',shot:0,cat:'acc',alts:A(120,45,22),at:{0:[.62,.35,.42,.31,.64,.40]}},
+  {id:'p4-jacket',sc:3,who:'Hae-in',name:'Black tweed jacket',brand:'Chanel',price:null,url:'chanel.com',conf:96,side:'r',shot:0,cat:'apparel',alts:A(280,139,85),at:{0:[.62,.62,.17,.43,.80,1],1:[.62,.70,.17,.43,.80,1]}},
+  {id:'p4-necklace',sc:3,who:'Hae-in',name:'Long pearl necklace',brand:'Chanel',price:null,url:'chanel.com',conf:94,side:'l',shot:1,cat:'acc',alts:A(110,45,24),at:{0:[.33,.63,.24,.42,.50,.99],1:[.27,.86,.24,.42,.50,.99]}},
+  {id:'p5-blazer',sc:4,who:'Hae-in',name:'30 Montaigne blazer',brand:'Dior',price:null,url:'dior.com',conf:96,side:'r',shot:0,cat:'apparel',alts:A(250,119,75),at:{0:[.66,.70,.15,.52,.82,1],1:[.66,.70,.15,.52,.82,1]}},
+  {id:'p5-belt',sc:4,who:'Hae-in',name:'CD buckle belt',brand:'Dior',price:null,url:'dior.com',conf:95,side:'l',shot:1,cat:'acc',alts:A(85,39,19),at:{1:[.42,.925,.33,.90,.69,.985]}},
+  {id:'p6-playsuit',sc:5,who:'Hae-in',name:'Tweed playsuit',brand:'Soonil',price:null,conf:95,side:'l',shot:0,cat:'apparel',alts:A(190,95,55),at:{0:[.64,.60,.30,.42,.85,1],1:[.56,.66,.30,.42,.85,1]}},
+  {id:'p6-belt',sc:5,who:'Hae-in',name:'Bow belt',brand:'Alaïa',price:null,url:'maison-alaia.com',conf:93,side:'r',shot:1,cat:'acc',alts:A(95,42,22),at:{1:[.72,.84,.44,.80,.80,.89]}},
  ]};
 // ---- illustrated: original artwork. a = tag anchor, b = bounding box, in figure-local units.
 // price = null when no public price was found; noEp marks pieces documented for the series but not pinned to this episode.
-REELS.art={label:'Illustrated',
+REELS.art={label:'Illustrated',seg:24,
  scenes:[
   {id:'s1',fx:0,ep:1,base:12*60+8,name:'Queens Department Store',figs:['s1-haein','s1-hyunwoo'],
    shots:[{dt:0,z:1,cx:.5,cy:.5,par:.4},{dt:8,z:1.7,cx:.32,cy:.38,par:1},{dt:16,z:1.5,cx:.62,cy:.40,par:1}],
@@ -79,12 +88,12 @@ REELS.art={label:'Illustrated',
 // resolve absolute times once, and index every item across reels
 const itemById={},ALL_SCENES=[],ALL_ITEMS=[];
 for(const k in REELS){const R0=REELS[k];
-  R0.scenes.forEach((sc,i)=>{sc.reel=k;sc.t0=i*SEG;sc.t1=(i+1)*SEG;sc.shots.forEach(s=>s.t=sc.t0+s.dt);sc.subs=sc.subs.map(s=>[sc.t0+s[0],sc.t0+s[1],s[2]]);ALL_SCENES.push(sc)});
+  R0.scenes.forEach((sc,i)=>{sc.reel=k;sc.t0=i*R0.seg;sc.t1=(i+1)*R0.seg;sc.shots.forEach(s=>s.t=sc.t0+s.dt);sc.subs=sc.subs.map(s=>[sc.t0+s[0],sc.t0+s[1],s[2]]);ALL_SCENES.push(sc)});
   const n=R0.scenes.map(()=>0);
   for(const it of R0.items){const sc=R0.scenes[it.sc];it.reel=k;it.scene=sc;it.ep=sc.ep;it.t=sc.shots[it.shot].t+2.5;it.from=1+.4*n[it.sc]++;itemById[it.id]=it;ALL_ITEMS.push(it)}
 }
-let reel=REELS.stills?'stills':'art',SCENES,ITEMS,DUR;
-function useReel(k){reel=k;SCENES=REELS[k].scenes;ITEMS=REELS[k].items;DUR=SCENES.length*SEG}
+let reel=REELS.stills?'stills':'art',SCENES,ITEMS,DUR,SEG;
+function useReel(k){reel=k;SCENES=REELS[k].scenes;ITEMS=REELS[k].items;SEG=REELS[k].seg;DUR=SCENES.length*SEG}
 useReel(reel);
 const sceneIdx=t=>Math.min(SCENES.length-1,Math.max(0,Math.floor(t/SEG)));
 const clockIn=(sc,t)=>{const s=Math.floor(sc.base+t-sc.t0);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
