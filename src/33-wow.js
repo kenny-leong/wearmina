@@ -37,13 +37,14 @@ function ripple(cx,cy){
     const its=R0.items.filter(i=>i.sc===k),brands=[...new Set(its.filter(i=>!i.similar).map(i=>i.brand))];
     let img;if(sc.figs)img=`<svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#bg-${sc.id}"/><use href="#fg-${sc.id}"/></svg>`;
     else{const n=sc.shots[0].img,r=frameRect(n);img=`<svg viewBox="${(r.x*1600).toFixed(1)} 0 ${(r.w*1600).toFixed(1)} 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#fr-${n}"/></svg>`}
-    return`<button class="lb-card" data-look="${k}"><span class="lb-img">${img}<em>${its.length} piece${its.length===1?'':'s'}</em></span><span class="lb-meta"><small>Look ${String(k+1).padStart(2,'0')}${sc.ep?' · Episode '+sc.ep:''}</small><b>${sc.name}</b><span>${brands.join(' · ')||'Closest matches'}</span></span></button>`}).join('');
+    return`<button class="lb-card" data-look="${k}"><span class="lb-img">${img}<strong>${String(k+1).padStart(2,'0')}</strong><em>${its.length} piece${its.length===1?'':'s'}</em></span><span class="lb-meta"><small>Look ${String(k+1).padStart(2,'0')}${sc.ep?' · Episode '+sc.ep:''}</small><b>${sc.name}</b><span>${brands.join(' · ')||'Closest matches'}</span></span></button>`}).join('');
   strip.addEventListener('click',e=>{const c=e.target.closest('[data-look]');if(!c)return;const sc=R0.scenes[+c.dataset.look];setReel(sc.reel);closeProduct(true);seek(sc.t0+.6);pause(true);toDemo()});
   const brands=new Set(R0.items.filter(i=>!i.similar).map(i=>i.brand));
   $('#lbStats').textContent=`${R0.scenes.length} scenes · ${R0.items.length} pieces · ${brands.size} brands identified`;
   // brand marquee under the hero
-  const names=[...brands];
-  if(names.length>3){$('#marq').innerHTML=[0,1].map(()=>names.map(n=>`<span>${n}</span>`).join('')).join('');$('#marqWrap').hidden=false}
+  // kinetic band under the hero: every identified piece in the reel, as an invitation to tap it
+  const pieces=R0.items.filter(i=>!i.similar).map(i=>(i.short||i.name).replace(/^30 Montaigne /,''));
+  if(pieces.length>3){$('#marq').innerHTML=[0,1].map(()=>pieces.map((p,j)=>`<span${j%2?' class="o"':''}>Tap the ${p}</span><i>✦</i>`).join('')).join('');$('#marqWrap').hidden=false}
 }
 
 // ---- hero card tilts toward the cursor
@@ -62,4 +63,16 @@ if(!RM){
       setTimeout(()=>{if(!touched&&!playing&&!openId&&tourI<0)play()},2900)},1400);
   },{threshold:.6});
   io.observe(stage);
+}
+
+// ---- a pink TAP badge follows the pointer over the hero and over any garment in the player
+if(matchMedia('(hover:hover) and (pointer:fine)').matches){
+  const c=$('#tapCur');let x=0,y=0,raf=0,on=false;
+  const paint=()=>{raf=0;c.style.transform=`translate(${x}px,${y}px)`};
+  addEventListener('mousemove',e=>{
+    x=e.clientX;y=e.clientY;const el=e.target,v=!!(el.closest&&(el.closest('#teaser')||(el.closest('#stage')&&stage.classList.contains('hit')&&!el.closest('.spot,.ppanel'))));
+    if(v!==on){on=v;c.classList.toggle('on',v)}
+    if(on&&!raf)raf=requestAnimationFrame(paint);
+  },{passive:true});
+  addEventListener('scroll',()=>{if(on){on=false;c.classList.remove('on')}},{passive:true});
 }

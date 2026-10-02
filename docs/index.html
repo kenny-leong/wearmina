@@ -696,6 +696,79 @@ footer{border-top-color:var(--ink)}
 .p-brand{text-transform:uppercase;letter-spacing:.14em;font-size:.68rem;font-weight:600;margin-top:0}
 .lk-txt span{letter-spacing:.02em}
 
+/* Pop: hot pink used in big blocks instead of small dots, oversized moving type, colour-on-hover images, a spinning sticker and a TAP cursor. */
+:root{--pop:#FF2E93;--pop-ink:#0A0A0A}
+::selection{background:var(--pop);color:var(--pop-ink)}
+h1 em,h2 em{color:var(--accent)}
+.room h2 em{color:var(--st-accent)}
+
+/* buttons: pink, flipping to black on hover */
+.btn,.btn-st,.btn-shop,.saveall,.seg button,.chip{transition:background .18s,color .18s,box-shadow .18s}
+.btn,.ask .btn{background:var(--pop);color:var(--pop-ink)}
+.btn:hover{opacity:1;background:var(--ink);color:var(--bg)}
+.btn.ghost,.ask .btn.ghost{background:transparent}
+.btn.ghost{color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:var(--bg)}
+.ask .btn:hover{background:var(--bg);color:var(--ink)}
+.ask .btn.ghost{color:var(--bg)}
+.btn-st{background:var(--pop);color:var(--pop-ink)}
+.btn-st:hover{background:var(--st-ink)}
+.nav nav a:hover{color:var(--accent)}
+
+/* hero: pink block behind the frame, spinning sticker on its corner */
+.teaser{isolation:isolate}
+.teaser::before{content:"";position:absolute;inset:0;transform:translate(18px,18px);background:var(--pop);z-index:-1}
+.teaser-frame{box-shadow:none}
+.sticker{position:absolute;top:-40px;right:-40px;width:116px;height:116px;z-index:3;pointer-events:none}
+.sticker circle{fill:var(--ink)}
+.sticker text{fill:var(--bg);font:600 12px var(--body);letter-spacing:2.2px}
+.sticker .st-m{font:600 34px var(--display);fill:var(--pop);letter-spacing:0}
+.sticker .rot{transform-origin:60px 60px;animation:spin 18s linear infinite}
+@media(max-width:480px){.sticker{right:-8px;top:-36px;width:92px;height:92px}.teaser::before{transform:translate(10px,10px)}}
+
+/* kinetic bands: giant type sliding across */
+.marq{display:block;background:var(--pop);color:var(--pop-ink);border:0;padding:0;overflow:hidden}
+.marq-view{-webkit-mask-image:none;mask-image:none;width:auto}
+.marq-track{align-items:center;animation-duration:60s;padding-block:clamp(10px,1.6vw,20px)}
+.marq-track span{font:500 clamp(2rem,5.4vw,4.6rem)/1 var(--display);letter-spacing:-.01em;text-transform:uppercase;padding-inline:.3em;white-space:nowrap}
+.marq-track span.o{font-style:italic;text-transform:none;color:transparent;-webkit-text-stroke:1.5px var(--pop-ink)}
+.marq-track i{font-style:normal;font-size:clamp(1rem,2vw,1.6rem)}
+.marq.rev{background:var(--ink);color:var(--bg)}
+.marq.rev .marq-track{animation-direction:reverse;animation-duration:40s}
+.marq.rev span.o{-webkit-text-stroke-color:var(--bg)}
+
+/* pitch sections */
+.path.mina{background:var(--pop);color:var(--pop-ink)}
+.path.mina h3{color:inherit;opacity:.8}
+.hypo .num{color:var(--accent)}
+.bar.hi{background:var(--accent)}
+.road li.cur{border-top-color:var(--accent)}
+.road li.cur::before{background:var(--accent)}
+.road li.cur .k{color:var(--accent)}
+@media(max-width:820px){.road li.cur{border-left-color:var(--accent)}}
+.qpt.me::before{box-shadow:0 0 0 8px var(--accent-soft)}
+
+/* the room: a pink spotlight from above, and a pink block behind the player */
+.room{background:radial-gradient(70% 440px at 50% 0,rgba(255,46,147,.28),transparent 72%),var(--st-bg)}
+@media(min-width:701px){
+  .device[data-device=browser]{padding:0 14px 14px 0}
+  .device[data-device=browser] .screen{box-shadow:14px 14px 0 var(--st-accent)}
+}
+
+/* lookbook: black and white until you point at it */
+.lb-img strong{position:absolute;right:10px;top:4px;font:500 3.2rem/1 var(--display);color:var(--st-white);mix-blend-mode:difference;pointer-events:none}
+.lb-card:hover .lb-img em,.lb-card:focus-visible .lb-img em{background:var(--st-accent);color:var(--st-accent-ink)}
+@media(hover:hover){
+  .lb-img svg{filter:grayscale(1) contrast(1.08);transition:filter .45s,transform .5s cubic-bezier(.2,.8,.2,1)}
+  .lb-card:hover .lb-img svg,.lb-card:focus-visible .lb-img svg{filter:none}
+}
+
+/* TAP cursor (desktop pointers only) */
+.tapcur{position:fixed;left:0;top:0;width:76px;height:76px;margin:-38px 0 0 -38px;border-radius:50%;background:var(--pop);color:var(--pop-ink);display:grid;place-items:center;font:600 .68rem var(--body);letter-spacing:.2em;text-indent:.2em;text-transform:uppercase;pointer-events:none;z-index:300;opacity:0;scale:.3;transition:opacity .15s,scale .22s cubic-bezier(.2,1.4,.4,1)}
+.tapcur.on{opacity:1;scale:1}
+@media(hover:hover) and (pointer:fine){#teaser,.stage.hit{cursor:none}}
+@media (prefers-reduced-motion:reduce){.sticker .rot{animation:none}}
+
 </style>
 <header class="nav"><div class="wrap">
   <a class="logo" href="#top"><span class="logo-mark" aria-hidden="true"></span>mina</a>
@@ -716,11 +789,12 @@ footer{border-top-color:var(--ink)}
   </div>
   <div class="teaser">
     <div class="teaser-frame" id="teaser" role="button" tabindex="0" aria-label="Open this look in the demo"><span class="teaser-bug">QUEEN OF TEARS · E7</span></div>
+    <svg class="sticker" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="60"/><defs><path id="stc" d="M60,60 m-45,0 a45,45 0 1,1 90,0 a45,45 0 1,1 -90,0"/></defs><g class="rot"><text><textPath href="#stc" textLength="278">TAP TO SHOP ✦ TAP TO SHOP ✦ </textPath></text></g><text class="st-m" x="60" y="72" text-anchor="middle">M</text></svg>
     <div class="hangtag" id="heroTag"><small>Balmain</small><b>Double-breasted wool blazer</b><span>Hae-in · episode 7</span><i>$2,595</i></div>
   </div>
 </div></section>
 
-<div class="marq" id="marqWrap" hidden><span class="marq-label">In the demo</span><div class="marq-view"><div class="marq-track" id="marq"></div></div></div>
+<div class="marq" id="marqWrap" aria-hidden="true" hidden><div class="marq-view"><div class="marq-track" id="marq"></div></div></div>
 
 <section id="problem"><div class="wrap">
   <div class="sec-head">
@@ -1011,6 +1085,8 @@ footer{border-top-color:var(--ink)}
   </ol>
 </div></section>
 
+<div class="marq rev" aria-hidden="true"><div class="marq-view"><div class="marq-track"><span>Wear what you watch</span><i>✦</i><span class="o">Wear what you watch</span><i>✦</i><span>Wear what you watch</span><i>✦</i><span class="o">Wear what you watch</span><i>✦</i><span>Wear what you watch</span><i>✦</i><span class="o">Wear what you watch</span><i>✦</i><span>Wear what you watch</span><i>✦</i><span class="o">Wear what you watch</span><i>✦</i></div></div></div>
+
 <section id="ask"><div class="wrap">
   <div class="ask">
     <p class="eyebrow">Want in?</p>
@@ -1035,6 +1111,7 @@ footer{border-top-color:var(--ink)}
 <div class="sheet" id="sheet" hidden><div class="sheet-card"><button class="sheet-grab" data-close aria-label="Close product"></button><div class="pc" id="sheetBody"></div></div></div>
 <div class="handoff" id="handoff" hidden></div>
 <div class="toast" id="toast" role="status"></div>
+<div class="tapcur" id="tapCur" aria-hidden="true">Tap</div>
 
 <script>
 (()=>{
@@ -1695,7 +1772,7 @@ $$('.calc input').forEach(i=>i.addEventListener('input',calc));calc();
 {
   const eps=[3100,4200,5400,6100,7600,8300,12400,9800],max=15000;
   $('#grid').innerHTML=[0,5,10,15].map(k=>`<span style="bottom:${k/15*100}%"><i>${k?k+'k':'0'}</i></span>`).join('');
-  $('#bars').innerHTML=eps.map((v,i)=>`<button class="bar" style="height:${v/max*100}%" aria-label="Episode ${i+1}: ${v.toLocaleString('en-US')} taps"><span class="tip">E${i+1} · ${v.toLocaleString('en-US')} taps</span></button>`).join('');
+  $('#bars').innerHTML=eps.map((v,i)=>`<button class="bar${v===Math.max(...eps)?' hi':''}" style="height:${v/max*100}%" aria-label="Episode ${i+1}: ${v.toLocaleString('en-US')} taps"><span class="tip">E${i+1} · ${v.toLocaleString('en-US')} taps</span></button>`).join('');
   $('#xl').innerHTML=eps.map((v,i)=>`<span>E${i+1}</span>`).join('');
   $('#hbars').innerHTML=[['Hae-in',38],['Hyun-woo',29],['Others',22]].map(([n,v])=>`<div class="hbar"><span>${n}</span><i style="width:${v/40*100}%"></i><b>${v}%</b></div>`).join('');
 }
@@ -1756,13 +1833,14 @@ function ripple(cx,cy){
     const its=R0.items.filter(i=>i.sc===k),brands=[...new Set(its.filter(i=>!i.similar).map(i=>i.brand))];
     let img;if(sc.figs)img=`<svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#bg-${sc.id}"/><use href="#fg-${sc.id}"/></svg>`;
     else{const n=sc.shots[0].img,r=frameRect(n);img=`<svg viewBox="${(r.x*1600).toFixed(1)} 0 ${(r.w*1600).toFixed(1)} 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#fr-${n}"/></svg>`}
-    return`<button class="lb-card" data-look="${k}"><span class="lb-img">${img}<em>${its.length} piece${its.length===1?'':'s'}</em></span><span class="lb-meta"><small>Look ${String(k+1).padStart(2,'0')}${sc.ep?' · Episode '+sc.ep:''}</small><b>${sc.name}</b><span>${brands.join(' · ')||'Closest matches'}</span></span></button>`}).join('');
+    return`<button class="lb-card" data-look="${k}"><span class="lb-img">${img}<strong>${String(k+1).padStart(2,'0')}</strong><em>${its.length} piece${its.length===1?'':'s'}</em></span><span class="lb-meta"><small>Look ${String(k+1).padStart(2,'0')}${sc.ep?' · Episode '+sc.ep:''}</small><b>${sc.name}</b><span>${brands.join(' · ')||'Closest matches'}</span></span></button>`}).join('');
   strip.addEventListener('click',e=>{const c=e.target.closest('[data-look]');if(!c)return;const sc=R0.scenes[+c.dataset.look];setReel(sc.reel);closeProduct(true);seek(sc.t0+.6);pause(true);toDemo()});
   const brands=new Set(R0.items.filter(i=>!i.similar).map(i=>i.brand));
   $('#lbStats').textContent=`${R0.scenes.length} scenes · ${R0.items.length} pieces · ${brands.size} brands identified`;
   // brand marquee under the hero
-  const names=[...brands];
-  if(names.length>3){$('#marq').innerHTML=[0,1].map(()=>names.map(n=>`<span>${n}</span>`).join('')).join('');$('#marqWrap').hidden=false}
+  // kinetic band under the hero: every identified piece in the reel, as an invitation to tap it
+  const pieces=R0.items.filter(i=>!i.similar).map(i=>(i.short||i.name).replace(/^30 Montaigne /,''));
+  if(pieces.length>3){$('#marq').innerHTML=[0,1].map(()=>pieces.map((p,j)=>`<span${j%2?' class="o"':''}>Tap the ${p}</span><i>✦</i>`).join('')).join('');$('#marqWrap').hidden=false}
 }
 
 // ---- hero card tilts toward the cursor
@@ -1781,6 +1859,18 @@ if(!RM){
       setTimeout(()=>{if(!touched&&!playing&&!openId&&tourI<0)play()},2900)},1400);
   },{threshold:.6});
   io.observe(stage);
+}
+
+// ---- a pink TAP badge follows the pointer over the hero and over any garment in the player
+if(matchMedia('(hover:hover) and (pointer:fine)').matches){
+  const c=$('#tapCur');let x=0,y=0,raf=0,on=false;
+  const paint=()=>{raf=0;c.style.transform=`translate(${x}px,${y}px)`};
+  addEventListener('mousemove',e=>{
+    x=e.clientX;y=e.clientY;const el=e.target,v=!!(el.closest&&(el.closest('#teaser')||(el.closest('#stage')&&stage.classList.contains('hit')&&!el.closest('.spot,.ppanel'))));
+    if(v!==on){on=v;c.classList.toggle('on',v)}
+    if(on&&!raf)raf=requestAnimationFrame(paint);
+  },{passive:true});
+  addEventListener('scroll',()=>{if(on){on=false;c.classList.remove('on')}},{passive:true});
 }
 
 })();

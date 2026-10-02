@@ -53,7 +53,7 @@ $$('.calc input').forEach(i=>i.addEventListener('input',calc));calc();
 {
   const eps=[3100,4200,5400,6100,7600,8300,12400,9800],max=15000;
   $('#grid').innerHTML=[0,5,10,15].map(k=>`<span style="bottom:${k/15*100}%"><i>${k?k+'k':'0'}</i></span>`).join('');
-  $('#bars').innerHTML=eps.map((v,i)=>`<button class="bar" style="height:${v/max*100}%" aria-label="Episode ${i+1}: ${v.toLocaleString('en-US')} taps"><span class="tip">E${i+1} · ${v.toLocaleString('en-US')} taps</span></button>`).join('');
+  $('#bars').innerHTML=eps.map((v,i)=>`<button class="bar${v===Math.max(...eps)?' hi':''}" style="height:${v/max*100}%" aria-label="Episode ${i+1}: ${v.toLocaleString('en-US')} taps"><span class="tip">E${i+1} · ${v.toLocaleString('en-US')} taps</span></button>`).join('');
   $('#xl').innerHTML=eps.map((v,i)=>`<span>E${i+1}</span>`).join('');
   $('#hbars').innerHTML=[['Hae-in',38],['Hyun-woo',29],['Others',22]].map(([n,v])=>`<div class="hbar"><span>${n}</span><i style="width:${v/40*100}%"></i><b>${v}%</b></div>`).join('');
 }
