@@ -87,14 +87,14 @@ function syncSaves(){
 
 // ---- product card
 function productHTML(it){
-  const note=it.similar?'The exact piece has not been identified, so this is the closest match from a demo retailer.':it.noEp?'Identified by fashion press as worn in the series. Placed in this scene for the demo.':it.ep?`Identified by fashion press for episode ${it.ep}.`:'Identified by fashion press for this look.';
+  const note=it.similar?`Nobody has identified the exact piece yet, so this is the closest match, from a made-up demo shop.`:it.noEp?`Fashion blogs identified this as worn in the series. It's placed in this scene for the demo.`:it.ep?`Identified by fashion blogs for episode ${it.ep}.`:`Identified by fashion blogs for this look.`;
   return`<div class="p-thumb">${thumb(it)}<span class="p-seen">Seen on ${it.who} · ${seen(it)}</span></div>
   <div class="p-meta"><span class="badge ${it.similar?'similar':'exact'}">${it.similar?'Closest match':'Identified'}</span><span class="p-conf">${it.conf}% visual match</span></div>
   <h4>${it.name}</h4><p class="p-brand">${it.brand}</p>
-  <p class="p-price">${it.price==null?'<span class="p-na">Price at retailer</span>':usd(it.price)}</p>
+  <p class="p-price">${it.price==null?'<span class="p-na">See the price at the brand</span>':usd(it.price)}</p>
   <p class="p-note">${note}</p>
   <div class="p-actions"><button class="btn-shop" data-shop="${it.id}">Shop at ${it.brand}</button><button class="btn-save" data-save="${it.id}" aria-pressed="false">♡ Save</button></div>
-  <h5>Get the look for less <span>demo retailers</span></h5>
+  <h5>Get it for less <span>made-up shops</span></h5>
   <div class="alts">${it.alts.map((a,k)=>`<button class="alt${(tier===1&&k===0)||(tier===2&&k===2)?' pick':''}" data-alt="${it.id}|${k}"><b>${a[0]}</b>${it.price?`<span class="less">−${Math.round((1-a[1]/it.price)*100)}%</span>`:''}<span>${usd(a[1])}</span></button>`).join('')}</div>`;
 }
 const useStagePanel=()=>device==='browser'&&stage.clientWidth>=620;
@@ -135,7 +135,7 @@ function renderList(){
   $('#sceneCount').textContent=its.length;$('#sceneName').textContent=sceneLabel(sc);syncSaves();lastT=-1;
 }
 function renderCloset(){
-  $('#closetList').innerHTML=closet.length?closet.map(id=>rowHTML(itemById[id],true)).join(''):'<li class="empty">Nothing saved yet. Tap ♥ on any look and it lands here, with the scene it came from.</li>';
+  $('#closetList').innerHTML=closet.length?closet.map(id=>rowHTML(itemById[id],true)).join(''):`<li class="empty">Nothing here yet. Tap ♥ on anything you like and it'll show up here.</li>`;
   syncSaves();
 }
 function setTier(k){

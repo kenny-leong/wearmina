@@ -24,10 +24,10 @@ if(REELS.stills){
 
 // ---- how it works
 const PIPE=[
- ['Sync','Knows the show and the second','Mina reads the title and the playback position from the player. That is all it needs: the video itself never leaves your device.',['Works on any service with a web or TV player','Timestamp accuracy to the frame, so tags never drift','No account link with the streamer required']],
- ['Wardrobe graph','Knows every outfit in every scene','A database of what each character wears, scene by scene. Three sources feed it, and each one checks the others. The demo above uses the third: public identifications by fashion press and fans.',['Costume department credits, the ground truth for exact items','Visual matching against retailer catalogs for everything else','Fan tagging with review, which covers new episodes within hours']],
- ['Overlay','Draws the tags','Tags are placed over the player and timed to the frame. They stay quiet while you watch and open up when you pause.',['Dots, labels or off: the viewer chooses','Pause triggers a full scan of the frame','On a TV, the tags move to your phone']],
- ['Commerce','Sends you to the product','Each tag links to the retailer with an attribution code. You get the exact item when it exists and the closest matches when it does not.',['Exact and similar items are always labeled as such','Cheaper alternatives on every look','The code credits the show, the episode and the second']],
+ ["Sync","Works out what you're watching","Mina reads two things from the player: which show is on, and how far in you are. That's all it needs. It never sees or uploads the video itself.",["Works anywhere there's a web or TV player","Accurate to the frame, so tags don't slide off the clothes","You don't have to link your streaming account"]],
+ ["Wardrobe graph","Looks up who's wearing what","This is the hard part: a big catalog of what every character wears, scene by scene. It gets filled in three ways, and each one double-checks the others. The demo above runs on the third.",["Costume departments, who know exactly what was bought","Image matching against shop catalogs, for everything else","Fans and fashion blogs, who are often first to work out a new episode"]],
+ ["Overlay","Puts the tags on screen","Mina draws the tags over the video and keeps them stuck to the clothes as people move. They stay small while you're watching and open up when you pause.",["Dots, labels or off. Your call","Pause and it scans the whole frame","On a TV, the tags go to your phone instead"]],
+ ["Commerce","Takes you to the shop","Every tag is a link to the shop, with a code attached so the brand knows the sale came from Mina. If the exact piece exists, you get it. If it's custom or sold out, you get the closest thing.",["It always says whether it's the exact piece or a lookalike","Cheaper options under every piece","The code records the show, the episode and the second"]],
 ];
 function setPipe(i){
   $$('#pipe button').forEach((b,k)=>b.setAttribute('aria-selected',k===i));
@@ -61,11 +61,11 @@ $$('.calc input').forEach(i=>i.addEventListener('input',calc));calc();
 // ---- waitlist (prototype: nothing is sent or stored except a flag)
 $('#waitForm').addEventListener('submit',e=>{
   e.preventDefault();const inp=$('#waitEmail');
-  if(!inp.value.trim()||!inp.checkValidity()){inp.focus();return toast('Enter an email address to join.')}
+  if(!inp.value.trim()||!inp.checkValidity()){inp.focus();return toast('Pop in an email first.')}
   try{localStorage.setItem('mina.waitlist','1')}catch(err){}
-  inp.value='';toast('You are on the list. Prototype only: nothing was sent.');
+  inp.value='';toast('Got it. This is a prototype, so nothing was sent.');
 });
-$('#partnerBtn').onclick=()=>toast('Prototype: partner inquiries are not wired up yet.');
+$('#partnerBtn').onclick=()=>toast('Not hooked up yet. This is still a prototype.');
 
 // ---- start
 if(!REELS.stills)$('#reelSeg').hidden=true;

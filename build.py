@@ -34,7 +34,7 @@ SHELL = ('<!doctype html><html lang="en"><head><meta charset="utf-8">'
 if PUBLIC:
     # Standalone page for public hosting (GitHub Pages serves docs/), kept out of search results.
     if not STILLS:
-        page = page.replace("Stills are shown for demonstration and belong to the show’s owners; the other frames are original illustrations.",
+        page = page.replace("Stills belong to the show’s owners; the other frames are original illustrations.",
                             "Frames are original illustrations.")
         assert "data:image/jpeg" not in page
     extra = ('<meta name="robots" content="noindex">'

@@ -14,7 +14,7 @@ function setDevice(d){
     paired=true;const was=playing;pause(false);
     $('#qr').innerHTML=qrSVG();$('#pair').hidden=false;$('#compPair').hidden=false;
     $('#pairTitle').textContent='Pairing';$('#pairText').innerHTML='<span class="spin"></span>Connecting to Living Room TV';
-    pairTimers=[setTimeout(()=>{$('#pairTitle').textContent='Paired';$('#pairText').textContent='Looks from the TV now appear here.'},RM?0:1500),
+    pairTimers=[setTimeout(()=>{$('#pairTitle').textContent='Paired';$('#pairText').textContent='The looks from the TV will show up here.'},RM?0:1500),
       setTimeout(()=>{endPair();if(was)play()},RM?600:2600)];
   }
 }
@@ -34,9 +34,9 @@ function openHandoff(it,alt){
         <li><b>Mina link</b><code>${SITE}/go/${code}</code></li>
         <li><b>${brand}</b><span>${real?it.url:'product page'}</span></li>
       </ol>
-      <aside class="sw-note"><b>How Mina gets paid</b>The link tells ${brand} which show, episode and second sent this shopper. If the order completes, Mina earns a commission on it.</aside>
-      ${real?`<a class="btn" href="https://www.${it.url}" target="_blank" rel="noopener noreferrer">Continue to ${it.url} ↗</a><p class="note">Opens the brand's real site in a new tab. No tracking code is attached in this prototype.</p>`
-            :`<button class="btn" data-demo-store>Continue to ${brand}</button><p class="note">${brand} is a demo retailer, so there is no site to open.</p>`}
+      <aside class="sw-note"><b>How Mina gets paid</b>The link tells ${brand} exactly which scene sent you. If you buy, Mina gets a cut.</aside>
+      ${real?`<a class="btn" href="https://www.${it.url}" target="_blank" rel="noopener noreferrer">Continue to ${it.url} ↗</a><p class="note">This opens the brand's real site in a new tab. There's no tracking on it yet, since this is a prototype.</p>`
+            :`<button class="btn" data-demo-store>Continue to ${brand}</button><p class="note">${brand} is a made-up shop for the demo, so there's nowhere to go.</p>`}
     </div></div>`;
   handReturn=document.activeElement;handEl.hidden=false;$('.sw-x',handEl).focus();
 }
@@ -47,14 +47,14 @@ const tourEl=$('#tour');let tourI=-1,tourTimer,tourAnim;
 const TOURCFG={stills:{hero:'p1-jacket',t0:.5,ts:8.5},art:{hero:'s3-blazer',t0:48.5,ts:58.5}};
 const tc=()=>TOURCFG[reel],th=()=>itemById[tc().hero];
 const TOUR=[
- [()=>'Press play. Mina identifies the show and the exact second you are watching.',()=>{if(!small())setDevice('browser');setMode('dots');setTier(0);showTab('scene');seek(tc().t0);play()},4600],
- [()=>'Tags follow the wardrobe on screen, and move with every cut.',()=>{setMode(small()?'dots':'labels')},4800],
- [()=>'Pause on any frame and Mina scans it for every look.',()=>{seek(tc().ts);pause(true)},4600],
- [()=>`Tap a tag. The card names the exact piece Hae-in wore${th().ep?' in episode '+th().ep:''}.`,()=>openProduct(tc().hero),5200],
- [()=>`Not ready for ${th().price?usd(th().price):th().brand+' prices'}? Every look comes with cheaper alternatives.`,()=>{const a=$('.alts',small()?sheet:useStagePanel()?stagePanel:companion);if(a){a.classList.add('pulse');const sc=a.closest('.ppanel,.comp-detail,.sheet-card');if(sc)sc.scrollTop=sc.scrollHeight}},4800],
- [()=>'Save it to your closet, with the scene it came from.',()=>{const h=tc().hero;if(!closet.includes(h))toggleSave(h);if(small()||!useStagePanel())closeProduct(true);showTab('closet')},4800],
- [()=>'Shop sends you to the brand through a Mina link that credits this second of this episode. That link is the business.',()=>openHandoff(th()),7000],
- [()=>'That is the whole loop: watch, tap, shop. Now try it yourself.',()=>{closeHandoff();closeProduct(true);showTab('scene');play()},4200],
+ [()=>`Hit play. Mina already knows which show this is and exactly where you are in it.`,()=>{if(!small())setDevice('browser');setMode('dots');setTier(0);showTab('scene');seek(tc().t0);play()},4600],
+ [()=>`The tags stick to the clothes, even when the shot changes.`,()=>{setMode(small()?'dots':'labels')},4800],
+ [()=>`Pause anywhere and it scans the frame for everything she's wearing.`,()=>{seek(tc().ts);pause(true)},4600],
+ [()=>`Tap a tag and you get the actual piece Hae-in wore${th().ep?' in episode '+th().ep:''}.`,()=>openProduct(tc().hero),5200],
+ [()=>`Not paying ${th().price?usd(th().price):th().brand+' prices'}? Fair. There are cheaper lookalikes under every piece.`,()=>{const a=$('.alts',small()?sheet:useStagePanel()?stagePanel:companion);if(a){a.classList.add('pulse');const sc=a.closest('.ppanel,.comp-detail,.sheet-card');if(sc)sc.scrollTop=sc.scrollHeight}},4800],
+ [()=>`Save it for later. It remembers which scene you saw it in.`,()=>{const h=tc().hero;if(!closet.includes(h))toggleSave(h);if(small()||!useStagePanel())closeProduct(true);showTab('closet')},4800],
+ [()=>`Hit Shop and you go to the brand through a Mina link, so they know this exact scene sent you. That link is how Mina gets paid.`,()=>openHandoff(th()),7000],
+ [()=>`That's the whole thing. Your turn.`,()=>{closeHandoff();closeProduct(true);showTab('scene');play()},4200],
 ];
 function tourStep(i){
   clearTimeout(tourTimer);if(tourAnim)tourAnim.cancel();
@@ -107,7 +107,7 @@ document.addEventListener('click',e=>{
   if(el=q('[data-mark]')){closeProduct(true);seek(+el.dataset.mark);return pause(true)}
   if(el=q('[data-try]')){setDevice(el.dataset.try);return toDemo()}
   if(q('[data-hclose]')||e.target===handEl)return closeHandoff();
-  if(q('[data-demo-store]'))return toast('Demo retailer: nothing to open in this prototype.');
+  if(q('[data-demo-store]'))return toast('That shop is made up for the demo.');
 });
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!handEl.hidden)closeHandoff();else if(openId)closeProduct()}});
 companion.addEventListener('mouseover',e=>{const r=e.target.closest('[data-row]');if(r&&!openId)setHL(r.dataset.row)});
