@@ -68,7 +68,6 @@ $('#waitForm').addEventListener('submit',e=>{
 $('#partnerBtn').onclick=()=>toast('Not hooked up yet. This is still a prototype.');
 
 // ---- start
-if(!REELS.stills)$('#reelSeg').hidden=true;
 if(small())setDevice('mobile');
 new ResizeObserver(()=>{if(openId&&small()===sheet.hidden)closeProduct(true)}).observe(document.documentElement);
 renderCloset();draw(true);

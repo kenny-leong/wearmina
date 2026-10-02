@@ -42,7 +42,23 @@ h1 em,h2 em{color:var(--accent)}
 /* pitch sections */
 .path.mina{background:var(--pop);color:var(--pop-ink)}
 .path.mina h3{color:inherit;opacity:.8}
-.hypo .num{color:var(--accent)}
+/* proof: real, sourced numbers are solid pink; our own guesses are drawn in outline */
+.proof{margin-top:clamp(36px,5vw,64px)}
+.proof-h{font:500 clamp(1.4rem,2.6vw,2rem)/1.15 var(--display);max-width:26ch;margin-bottom:22px;text-wrap:balance}
+.proof-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:1px solid var(--ink)}
+@media(max-width:900px){.proof-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.proof-grid{grid-template-columns:minmax(0,1fr)}}
+.pf{display:grid;gap:8px;align-content:start;padding:18px 18px 20px 0;text-decoration:none;border-bottom:1px solid var(--line);transition:background .18s,padding .18s}
+.pf:hover,.pf:focus-visible{background:var(--pop);color:var(--pop-ink);padding-left:14px}
+.pf .num{font:500 clamp(2.4rem,4.6vw,3.9rem)/1 var(--display);color:var(--accent);letter-spacing:-.02em}
+.pf:hover .num,.pf:focus-visible .num{color:inherit}
+.pf p{font-size:.94rem;color:var(--ink-2)}
+.pf:hover p,.pf:focus-visible p{color:inherit}
+.pf .src{font:600 .62rem var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.pf:hover .src,.pf:focus-visible .src{color:inherit}
+.guess-h{font:600 .68rem var(--body);letter-spacing:.22em;text-transform:uppercase;margin-top:clamp(36px,5vw,56px)}
+.hypo{margin-top:16px}
+.hypo .num{color:transparent;-webkit-text-stroke:1px var(--ink)}
 .bar.hi{background:var(--accent)}
 .road li.cur{border-top-color:var(--accent)}
 .road li.cur::before{background:var(--accent)}
