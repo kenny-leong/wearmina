@@ -1,0 +1,7 @@
+# Real stills and anything built with them stay off the public repo.
+frames/
+/index.html
+/preview.html
+/public.html
+.DS_Store
+__pycache__/

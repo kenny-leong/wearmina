@@ -1,0 +1,170 @@
+<style>
+.pf-a{fill:var(--ink)}.pf-b{fill:var(--accent)}.pf-c{fill:var(--line)}.pf-d{fill:var(--surface)}.pf-e{fill:var(--ink-3)}
+</style>
+<section id="how"><div class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">How it works</p>
+    <h2>How Mina knows what is on screen</h2>
+    <p class="lede">Four steps run between the frame you are watching and the product page. Select a step to see what is behind it.</p>
+  </div>
+  <div class="pipe" role="tablist" id="pipe"></div>
+  <div class="pipe-detail" id="pipeDetail" role="tabpanel"></div>
+</div></section>
+
+<section id="platforms"><div class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">Platforms</p>
+    <h2>One wardrobe graph, three screens</h2>
+    <p class="lede">The same data powers every surface. Each card switches the demo above to that mode.</p>
+  </div>
+  <div class="cards3">
+    <div class="plat">
+      <svg viewBox="0 0 320 170" aria-hidden="true"><rect class="pf-a" x="30" y="24" width="260" height="122" rx="8"/><rect class="pf-c" x="30" y="24" width="260" height="16" rx="8"/><circle class="pf-b" cx="276" cy="32" r="5"/><circle class="pf-d" cx="120" cy="84" r="6"/><circle class="pf-b" cx="120" cy="84" r="3"/><circle class="pf-d" cx="170" cy="110" r="6"/><circle class="pf-b" cx="170" cy="110" r="3"/><rect class="pf-d" x="218" y="46" width="66" height="94" rx="6"/><rect class="pf-c" x="224" y="52" width="54" height="34" rx="4"/><rect class="pf-b" x="224" y="122" width="54" height="10" rx="5"/></svg>
+      <h3>Browser extension</h3>
+      <p>Tags sit on top of the player in Chrome, Safari and Edge. The first product to ship, with no deal needed from any streamer.</p>
+      <button class="btn ghost sm" data-try="browser">Try this mode</button>
+    </div>
+    <div class="plat">
+      <svg viewBox="0 0 320 170" aria-hidden="true"><rect class="pf-a" x="20" y="26" width="210" height="112" rx="6"/><rect class="pf-e" x="100" y="138" width="50" height="8"/><circle class="pf-d" cx="96" cy="78" r="5"/><circle class="pf-d" cx="150" cy="100" r="5"/><rect class="pf-a" x="246" y="40" width="56" height="110" rx="10"/><rect class="pf-d" x="251" y="48" width="46" height="94" rx="6"/><rect class="pf-c" x="256" y="54" width="36" height="22" rx="3"/><rect class="pf-c" x="256" y="82" width="36" height="22" rx="3"/><rect class="pf-b" x="256" y="124" width="36" height="9" rx="4.5"/></svg>
+      <h3>Smart TV + phone</h3>
+      <p>The TV shows a quiet prompt. Your phone pairs with one scan and fills with the looks from the scene, live.</p>
+      <button class="btn ghost sm" data-try="tv">Try this mode</button>
+    </div>
+    <div class="plat">
+      <svg viewBox="0 0 320 170" aria-hidden="true"><rect class="pf-a" x="118" y="10" width="84" height="150" rx="14"/><rect class="pf-e" x="124" y="20" width="72" height="42" rx="4"/><circle class="pf-d" cx="150" cy="40" r="4"/><circle class="pf-d" cx="172" cy="48" r="4"/><rect class="pf-d" x="124" y="66" width="72" height="88" rx="8"/><rect class="pf-c" x="130" y="74" width="60" height="16" rx="3"/><rect class="pf-c" x="130" y="94" width="60" height="16" rx="3"/><rect class="pf-b" x="130" y="134" width="60" height="12" rx="6"/></svg>
+      <h3>Mobile</h3>
+      <p>For viewers who watch on a phone, looks slide up in a sheet under the video. One thumb, no app switching.</p>
+      <button class="btn ghost sm" data-try="mobile">Try this mode</button>
+    </div>
+  </div>
+</div></section>
+
+<section id="business"><div class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">Business model</p>
+    <h2>Three ways Mina makes money</h2>
+    <p class="lede">Free for viewers. Brands pay when a scene sells something, and for knowing which scenes do.</p>
+  </div>
+  <div class="cards3">
+    <div class="rev"><span class="k">Per sale</span><h3>Affiliate commission</h3><p>Every tag carries an attribution code. The brand pays a share of each order that started on screen.</p></div>
+    <div class="rev"><span class="k">Per placement</span><h3>Featured looks</h3><p>When the original piece is custom or sold out, a brand can sponsor the closest-match slot. Always labeled as featured.</p></div>
+    <div class="rev"><span class="k">Per seat</span><h3>Insights subscription</h3><p>Brands and studios see which scenes, characters and items create demand, episode by episode.</p></div>
+  </div>
+  <div class="calc">
+    <div class="fields">
+      <h3>Affiliate revenue calculator</h3>
+      <p class="note">Move the sliders. These are your assumptions, not a forecast.</p>
+      <div class="field"><label for="cMau">Monthly active viewers <output id="oMau"></output></label><input type="range" id="cMau" min="0" max="100" value="52"></div>
+      <div class="field"><label for="cTaps">Taps per viewer each month <output id="oTaps"></output></label><input type="range" id="cTaps" min="1" max="30" value="6"></div>
+      <div class="field"><label for="cConv">Taps that become orders <output id="oConv"></output></label><input type="range" id="cConv" min="0.5" max="8" step="0.5" value="2"></div>
+      <div class="field"><label for="cAov">Average order value <output id="oAov"></output></label><input type="range" id="cAov" min="20" max="400" step="5" value="85"></div>
+      <div class="field"><label for="cCom">Commission rate <output id="oCom"></output></label><input type="range" id="cCom" min="3" max="20" value="8"></div>
+    </div>
+    <div class="result" aria-live="polite">
+      <span class="k">Mina revenue per month</span>
+      <p class="big" id="rRev"></p>
+      <div class="rows">
+        <div><span>Taps per month</span><b id="rTaps"></b></div>
+        <div><span>Orders per month</span><b id="rOrders"></b></div>
+        <div><span>Sales sent to brands</span><b id="rGmv"></b></div>
+        <div><span>Revenue per year</span><b id="rYear"></b></div>
+      </div>
+      <p class="note">Affiliate commission only. Featured looks and subscriptions are extra.</p>
+    </div>
+  </div>
+</div></section>
+
+<section id="console"><div class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">For brands</p>
+    <h2>What a brand sees</h2>
+    <p class="lede">The insights product, shown with sample numbers for an example brand. A brand learns which scene sold the blazer.</p>
+  </div>
+  <div class="console">
+    <div class="con-bar"><b>Example brand</b><span>Queen of Tears · first eight episodes</span><span class="pill">Sample data</span></div>
+    <div class="kpis">
+      <div><span>Tag taps</span><b>56.9K</b></div>
+      <div><span>Store visits</span><b>17.6K</b></div>
+      <div><span>Orders</span><b>1,412</b></div>
+      <div><span>Attributed sales</span><b>$486K</b></div>
+    </div>
+    <div class="con-grid">
+      <div>
+        <h4>Tag taps per episode</h4>
+        <div class="plot"><div class="grid" id="grid"></div><div class="bars" id="bars"></div></div>
+        <div class="xl" id="xl"></div>
+        <p class="con-note">Episode 7 is the red blazer scene. That one look drew most of the episode's taps.</p>
+      </div>
+      <div>
+        <h4>Tap-through to store, by character</h4>
+        <div class="hbars" id="hbars"></div>
+        <p class="con-note">Share of taps on each character's looks that continued to the store.</p>
+      </div>
+    </div>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Top items</th><th>Taps</th><th>Saves</th><th>Orders</th></tr></thead>
+      <tbody>
+        <tr><td>Double-breasted blazer</td><td>21,480</td><td>6,120</td><td>412</td></tr>
+        <tr><td>Belted suede coat</td><td>14,950</td><td>3,310</td><td>268</td></tr>
+        <tr><td>Leather handbag</td><td>12,870</td><td>4,005</td><td>351</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</div></section>
+
+<section id="landscape"><div class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">Landscape</p>
+    <h2>Where Mina sits</h2>
+    <p class="lede">Every existing answer is either late or lives on another screen. Mina is the one that is both in the player and in the moment.</p>
+  </div>
+  <div class="quad">
+    <span class="qax" style="left:14px;top:12px">Inside the player</span>
+    <span class="qax" style="left:14px;bottom:12px">On another screen</span>
+    <div class="qpt" style="left:22%;bottom:16%">Search and fan forums</div>
+    <div class="qpt" style="left:33%;bottom:38%">Fan outfit accounts</div>
+    <div class="qpt" style="left:66%;bottom:20%">Screenshot visual search</div>
+    <div class="qpt" style="left:30%;bottom:80%">Shoppable ad breaks</div>
+    <div class="qpt me" style="left:82%;bottom:82%">mina</div>
+  </div>
+  <div class="quad-x"><span>← After the episode</span><span>In the moment →</span></div>
+</div></section>
+
+<section id="roadmap"><div class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">Roadmap</p>
+    <h2>From one show to every show</h2>
+  </div>
+  <ol class="road">
+    <li class="cur"><span class="k">Now</span><h3>Concept prototype</h3><p>This page. The full viewer loop, simulated end to end.</p></li>
+    <li><span class="k">Pilot</span><h3>One show, five brands</h3><p>A hand-tagged season. Measure tap, save and purchase rates.</p></li>
+    <li><span class="k">Beta</span><h3>Browser extension</h3><p>Public release with the wardrobe graph covering the most-searched shows.</p></li>
+    <li><span class="k">Living room</span><h3>TV companion</h3><p>Phone pairing for smart TVs, where long-form viewing happens.</p></li>
+    <li><span class="k">Scale</span><h3>Studio partnerships</h3><p>Costume departments deliver wardrobe data before the premiere.</p></li>
+  </ol>
+</div></section>
+
+<section id="ask"><div class="wrap">
+  <div class="ask">
+    <p class="eyebrow">The ask</p>
+    <h2>Help dress the next episode.</h2>
+    <p class="lede">We are looking for one pilot show, five launch brands and the first viewers who want to tap the coat.</p>
+    <form class="wait" id="waitForm" novalidate>
+      <label class="sr" for="waitEmail">Email address</label>
+      <input type="email" id="waitEmail" placeholder="you@example.com" autocomplete="email" required>
+      <button class="btn" type="submit">Join the waitlist</button>
+      <button class="btn ghost" type="button" id="partnerBtn">Partner with us</button>
+    </form>
+    <p class="note">Prototype form. Nothing you type here is sent anywhere.</p>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <span><b>wearmina.com</b> · Mina's App, concept prototype</span>
+  <span><i>Queen of Tears</i> and every brand named here belong to their owners and appear only as an example. Mina is not affiliated with or endorsed by them, or by Netflix or any streaming service. Stills are shown for demonstration and belong to the show’s owners; the other frames are original illustrations. Outfit identifications come from public fashion coverage. Demo retailers, timecodes, match scores and metrics are simulated.</span>
+</div></footer>
+
+<div class="sheet" id="sheet" hidden><div class="sheet-card"><button class="sheet-grab" data-close aria-label="Close product"></button><div class="pc" id="sheetBody"></div></div></div>
+<div class="handoff" id="handoff" hidden></div>
+<div class="toast" id="toast" role="status"></div>

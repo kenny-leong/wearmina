@@ -1,0 +1,160 @@
+<header class="nav"><div class="wrap">
+  <a class="logo" href="#top"><span class="logo-mark" aria-hidden="true"></span>mina</a>
+  <nav aria-label="Sections">
+    <a href="#demo">Demo</a><a href="#how">How it works</a><a href="#business">Business</a><a href="#roadmap">Roadmap</a>
+  </nav>
+  <a class="btn sm" href="#demo">Try the demo</a>
+</div></header>
+
+<main id="top">
+<section class="hero"><div class="wrap">
+  <div class="hero-copy">
+    <p class="eyebrow">wearmina.com · shoppable TV for any show</p>
+    <h1>Love the look? <em>Tap the screen.</em></h1>
+    <p class="lede">Mina's App is a plugin for Netflix and every other streaming service. It knows what each character is wearing in every scene and puts a tag on it that leads straight to the product page.</p>
+    <div class="cta-row"><a class="btn" href="#demo">Try the demo</a><a class="btn ghost" href="#business">See the business</a></div>
+    <p class="note">Concept prototype, shown with looks from <i>Queen of Tears</i>. The player below is a simulation.</p>
+  </div>
+  <div class="teaser" aria-hidden="true">
+    <div class="teaser-frame" id="teaser"><span class="teaser-bug">QUEEN OF TEARS · E7</span></div>
+    <div class="hangtag" id="heroTag"><small>Balmain</small><b>Double-breasted wool blazer</b><span>Hae-in · episode 7</span><i>$2,595</i></div>
+  </div>
+</div></section>
+
+<section id="problem"><div class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">The problem</p>
+    <h2>"Where is that blazer from?" is still a research project.</h2>
+    <p class="lede">Viewers want what characters wear at the moment they see it. Hong Hae-in's wardrobe in <i>Queen of Tears</i> filled fan sites for months, and each of those posts started with someone leaving the show to go searching.</p>
+  </div>
+  <div class="versus">
+    <div class="path today">
+      <h3>Today</h3>
+      <ol class="steps">
+        <li>Pause the episode.</li>
+        <li>Screenshot the scene.</li>
+        <li>Search "Hae-in red blazer episode 7".</li>
+        <li>Scroll a fan site for someone who already identified it.</li>
+        <li>Find out it costs $2,595, with no cheaper option in sight.</li>
+      </ol>
+      <p class="path-foot">Minutes of searching on another device. Often no answer.</p>
+    </div>
+    <div class="path mina">
+      <h3>With Mina</h3>
+      <p class="onetap">Tap the blazer.</p>
+      <p>One step, on the screen you are already watching, with the exact piece and three cheaper ones.</p>
+    </div>
+  </div>
+  <div class="hypo">
+    <div><span class="tagline">Hypothesis to validate</span><h3>Tap rate</h3><p class="num">15–25%</p><p>of viewers tap at least one tag per episode.</p></div>
+    <div><span class="tagline">Hypothesis to validate</span><h3>Save rate</h3><p class="num">1 in 3</p><p>tapped looks are saved to the closet for later.</p></div>
+    <div><span class="tagline">Hypothesis to validate</span><h3>Tap to purchase</h3><p class="num">1–3%</p><p>of taps end in an order on the brand's site.</p></div>
+  </div>
+  <p class="note" style="margin-top:18px">These are the three numbers the pilot is designed to measure. They are targets, not results.</p>
+</div></section>
+
+<section id="demo" class="room"><div class="wrap">
+  <div class="room-head">
+    <div>
+      <p class="eyebrow">Interactive demo</p>
+      <h2>Press pause. <em>Tap the look.</em></h2>
+      <p class="lede">Moments from <i>Queen of Tears</i> in a simulated player. Pause to scan the frame, tap any tag, switch the whole outfit to a budget version, then follow a piece to the store.</p>
+    </div>
+    <div class="room-tools">
+      <div class="seg" role="group" aria-label="Device" id="deviceSeg">
+        <button data-device="browser" aria-pressed="true">Browser</button>
+        <button data-device="tv" aria-pressed="false">TV + phone</button>
+        <button data-device="mobile" aria-pressed="false">Mobile</button>
+      </div>
+      <div class="seg" role="group" aria-label="Frames" id="reelSeg">
+        <button data-reel="stills" aria-pressed="true">Stills</button>
+        <button data-reel="art" aria-pressed="false">Illustrated</button>
+      </div>
+      <button class="btn-st" id="tourBtn">Guided tour</button>
+    </div>
+  </div>
+
+  <div class="device" id="device" data-device="browser">
+    <div class="screen-col">
+      <div class="screen">
+        <div class="chrome" aria-hidden="true">
+          <span class="dots"><i></i><i></i><i></i></span>
+          <span class="url">anystream.example/watch/queen-of-tears</span>
+          <span class="mbadge">M</span>
+        </div>
+        <div class="statusbar" aria-hidden="true"><span>9:41</span><i></i><span>5G</span></div>
+        <div class="stage paused" id="stage" data-mode="dots" data-scene="" data-kind="art" tabindex="0" role="group" aria-label="Video player. Press space to play or pause.">
+          <div class="cam-bg" id="camBg">
+            <svg class="art" id="artBg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+            <div id="fxWrap"></div>
+          </div>
+          <div class="cam" id="cam">
+            <svg class="art" id="artFg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+            <div class="dim"></div>
+            <div class="scanlayer" id="scanLayer"></div>
+            <div class="spots" id="spots"></div>
+          </div>
+          <div class="grade"></div>
+          <div class="grain"></div>
+          <div class="vignette"></div>
+          <div class="scanbar"></div>
+          <div class="bug">눈물의 여왕 · QUEEN OF TEARS<span id="epNow"></span></div>
+          <div class="status" id="status" aria-live="polite"></div>
+          <div class="subs" id="subs"></div>
+          <div class="tvhint"><span class="mbadge">M</span><span id="tvHint">Press ↑ to shop</span></div>
+          <aside class="ppanel" id="stagePanel" aria-label="Product" inert></aside>
+          <div class="pair" id="pair" hidden><div><div id="qr"></div><p><b>Scan to pair your phone</b>Mina shows the looks on your phone, so the TV stays clear.</p></div></div>
+        </div>
+        <div class="controls">
+          <button class="icon-btn" id="playBtn" aria-label="Play"><svg viewBox="0 0 16 16"><path id="playIcon" d="M4 2l10 6-10 6z"/></svg></button>
+          <button class="icon-btn skip" id="backBtn" aria-label="Back 8 seconds">−8</button>
+          <button class="icon-btn skip" id="fwdBtn" aria-label="Forward 8 seconds">+8</button>
+          <span class="time" id="timeNow">E1 · 12:10</span>
+          <div class="scrub"><input type="range" id="range" min="0" max="96" step="0.1" value="2" aria-label="Seek"><div class="marks" id="marks"></div></div>
+          <div class="mina-ctl">
+            <span class="mbadge" aria-hidden="true">M</span>
+            <div class="seg" role="group" aria-label="Mina overlay" id="modeSeg">
+              <button data-mode="off" aria-pressed="false">Off</button>
+              <button data-mode="dots" aria-pressed="true">Dots</button>
+              <button data-mode="labels" aria-pressed="false">Labels</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tvstand"></div>
+    </div>
+
+    <div class="companion" id="companion">
+      <div class="comp-status" aria-hidden="true"><span>9:41</span><i></i><span>5G</span></div>
+      <div class="grab" aria-hidden="true"></div>
+      <div class="comp-head">
+        <div class="row"><span class="logo-s">mina</span><span class="now"><i></i>Queen of Tears · <span id="nowTime">12:10</span></span></div>
+        <div class="scene-name" id="sceneName"></div>
+      </div>
+      <div class="comp-tabs" role="tablist">
+        <button role="tab" aria-selected="true" data-tab="scene" id="tabScene">This scene <b id="sceneCount">0</b></button>
+        <button role="tab" aria-selected="false" data-tab="closet" id="tabCloset">Closet <b id="closetCount">0</b></button>
+      </div>
+      <div class="comp-pane" id="paneScene">
+        <div class="tier"><span>Show me</span><div class="seg" role="group" aria-label="Price tier" id="tierSeg">
+          <button data-tier="0" aria-pressed="true">As worn</button><button data-tier="1" aria-pressed="false">For less</button><button data-tier="2" aria-pressed="false">Budget</button>
+        </div></div>
+        <div class="chips" id="whoChips"></div>
+        <ul class="looks" id="lookList"></ul>
+        <div class="total" id="lookTotal"></div>
+      </div>
+      <div class="comp-pane" id="paneCloset" hidden><ul class="looks" id="closetList"></ul></div>
+      <div class="comp-detail" id="compDetail" hidden><button class="back" data-close>← All looks</button><div class="pc" id="compDetailBody"></div></div>
+      <div class="comp-pair" id="compPair" hidden><div><b id="pairTitle">Pairing</b><span id="pairText"><span class="spin"></span>Connecting to Living Room TV</span></div></div>
+    </div>
+  </div>
+  <p class="room-note">Outfits are the ones fashion press identified for each episode. Timecodes, match scores and the cheaper retailers are simulated.</p>
+
+  <div class="tour" id="tour" hidden>
+    <span class="n" id="tourN">1 / 8</span>
+    <p id="tourText"></p>
+    <button class="next" id="tourNext">Next</button>
+    <button id="tourExit">Exit tour</button>
+    <span class="bar" id="tourBar"></span>
+  </div>
+</div></section>

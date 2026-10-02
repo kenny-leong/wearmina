@@ -1,0 +1,106 @@
+/* cinematic frame: blurred backdrop layer behind an in-focus figure layer, with grade, grain and floating lights */
+button,.stage,a{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.cam-bg{position:absolute;inset:0;transform-origin:0 0;will-change:transform}
+.cam-bg .art{filter:blur(2px);filter:blur(.26cqw)}
+.fx{position:absolute;inset:0;opacity:0;transition:opacity .5s;pointer-events:none}
+.fx.on{opacity:1}
+.fx i{position:absolute;aspect-ratio:1;border-radius:50%;animation:tw 5s ease-in-out infinite}
+.fx b{position:absolute;top:-4%;width:1.1%;aspect-ratio:1.6;border-radius:60% 10%;animation:fall 9s linear infinite}
+@keyframes fall{to{transform:translate(8cqw,62cqw) rotate(540deg)}}
+.stage.paused .fx *{animation-play-state:paused}
+.grade{position:absolute;inset:0;pointer-events:none;mix-blend-mode:soft-light;opacity:.45}
+.stage[data-scene="s1"] .grade{background:linear-gradient(120deg,#FFD9A0,#7A4B2A)}
+.stage[data-scene="s2"] .grade{background:linear-gradient(120deg,#FFF1C2,#4E6FA8)}
+.stage[data-scene="s3"] .grade{background:linear-gradient(120deg,#BFD4F2,#1E2B44)}
+.stage[data-scene="s4"] .grade{background:linear-gradient(120deg,#FFC9A0,#2A2458)}
+.grain{position:absolute;inset:0;pointer-events:none;opacity:.16;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E")}
+.stage.flash:not([data-mode=off]) .status{opacity:1}
+/* real stills: the frame sits in focus over a heavily blurred, darkened copy of itself */
+.shot{display:none}
+.shot.on{display:inline}
+.stage[data-kind=photo] .cam-bg .art{filter:blur(22px) brightness(.5);filter:blur(2.8cqw) brightness(.5) saturate(1.15)}
+.stage[data-kind=photo] .grade{display:none}
+.stage[data-kind=photo] .grain{opacity:.22}
+.subs{transition:opacity .2s}
+.stage.paused[data-mode=labels] .subs{opacity:0}
+.cut{position:absolute;top:50%;width:2px;height:12px;margin-top:-6px;background:var(--st-surface)}
+.room-note{font-size:.78rem;color:var(--st-ink-3);margin-top:14px;max-width:70ch}
+@media (prefers-reduced-motion:reduce){.fx *{animation:none!important}}
+
+/* price tier + outfit total */
+.tier{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px 2px;font-size:.78rem;color:var(--st-ink-2)}
+.tier .seg button{font-size:.76rem;padding:.3em .8em}
+.total{position:sticky;bottom:0;display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;padding:10px 14px;background:var(--st-surface-2);border-top:1px solid var(--st-line);font-size:.76rem;color:var(--st-ink-2)}
+.total span{display:grid;min-width:0}
+.total span b{color:var(--st-ink);font-weight:600;font-size:.84rem}
+.total strong{font:500 1.3rem var(--display);color:var(--st-ink)}
+.saveall{font-size:.78rem;font-weight:600;padding:.45em .95em;border-radius:999px;background:var(--st-ink);color:var(--st-bg)}
+.p-price .p-na{margin-left:0;font-size:.8rem;color:var(--st-ink-2)}
+.pc h5 span{text-transform:none;letter-spacing:0;margin-left:6px;opacity:.8}
+.alt.pick{box-shadow:inset 0 0 0 2px var(--st-jade)}
+
+/* store handoff */
+.sw-top{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--line)}
+.sw-prod{grid-template-columns:104px minmax(0,1fr);align-items:center}
+.sw-img{aspect-ratio:1/1}
+.route{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.route li{position:relative;background:var(--surface-2);border-radius:12px;padding:10px 12px;display:grid;gap:2px;align-content:start;font-size:.8rem;min-width:0}
+.route li b{font:500 .64rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.route li code,.route li span{overflow-wrap:anywhere;color:var(--ink)}
+.route li:nth-child(2){background:var(--accent-soft)}
+.route li:nth-child(2) code{color:var(--accent);font-weight:500}
+.route li:not(:last-child)::after{content:"→";position:absolute;right:-10px;top:50%;transform:translateY(-50%);z-index:1;font-size:.8rem;color:var(--ink-3)}
+@media(max-width:520px){.route{grid-template-columns:minmax(0,1fr)}.route li:not(:last-child)::after{content:"↓";right:50%;top:auto;bottom:-14px;transform:translateX(50%)}}
+.shopwin .btn{justify-self:start}
+
+/* product sheet (phones) */
+.sheet{position:fixed;inset:0;z-index:90;display:flex;align-items:flex-end;background:linear-gradient(transparent 0,transparent calc(60px + 56.25vw),rgba(10,6,16,.62) calc(60px + 56.25vw))}
+.sheet-card{width:100%;max-height:calc(100% - 68px - 56.25vw);overflow-y:auto;background:var(--st-surface);color:var(--st-ink);border-radius:22px 22px 0 0;padding-bottom:env(safe-area-inset-bottom,0px);animation:rise .28s cubic-bezier(.2,.8,.2,1);overscroll-behavior:contain;box-shadow:0 -10px 40px rgba(0,0,0,.5)}
+@keyframes rise{from{transform:translateY(100%)}}
+.sheet-grab{display:block;width:100%;height:24px;position:sticky;top:0;background:var(--st-surface);z-index:2}
+.sheet-grab::before{content:"";display:block;width:40px;height:4px;border-radius:2px;background:var(--st-line);margin:0 auto}
+.sheet .p-thumb{aspect-ratio:16/8}
+
+/* phones: the page is the phone. No bezels, the player pins under the header, products open as a sheet. */
+@media(max-width:700px){
+  html{scroll-padding-top:64px}
+  section{padding-block:44px}
+  h1{font-size:clamp(2.5rem,12vw,3.4rem)}
+  .lede{font-size:1rem}
+  .hero{padding-block:24px 40px}
+  .teaser{max-width:320px}
+  .hangtag{width:190px}
+  .room-head{margin-bottom:16px}
+  #deviceSeg{display:none}
+  #reelSeg button{padding:.5em 1em}
+  .device,.device[data-device]{grid-template-columns:minmax(0,1fr);gap:0;margin-inline:calc(-1 * max(16px,4vw))}
+  .screen-col{position:sticky;top:calc(60px + env(safe-area-inset-top,0px));z-index:30}
+  .device .screen,.device[data-device] .screen{border:0;border-radius:0;box-shadow:none}
+  .chrome,.device[data-device] .chrome,.device[data-device] .statusbar,.device[data-device] .tvstand,.device[data-device] .comp-status,.device[data-device] .grab{display:none}
+  .device .companion,.device[data-device] .companion{contain:none;height:auto;max-height:none;max-width:none;width:auto;border:0;border-radius:0;box-shadow:none;overflow:visible}
+  .comp-pane,.comp-detail{overflow:visible}
+  .controls{padding:4px 10px;gap:2px 8px}
+  .icon-btn{width:40px;height:40px}
+  .icon-btn.skip,.mina-ctl .mbadge,#modeSeg [data-mode=labels]{display:none}
+  .scrub{flex-basis:110px}
+  .time{font-size:.7rem}
+  .spot{width:36px;height:36px}
+  .spot .dot{inset:10px;border-width:4px}
+  .spot .dot::after{inset:-7px}
+  .mark{width:26px;height:30px}
+  input[type=range]{height:30px}
+  input[type=range]::-webkit-slider-thumb{width:18px;height:18px;margin-top:-7px}
+  input[type=range]::-moz-range-thumb{width:18px;height:18px}
+  .look{padding:9px 6px}
+  .heart{width:44px;height:44px}
+  .chip{padding:.42em .95em;font-size:.84rem}
+  .comp-tabs button{padding:12px 10px}
+  .tier .seg button{padding:.5em .9em}
+  .room-note{padding-inline:0}
+  .tour{position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));margin:0;padding:10px 12px 14px;font-size:.88rem}
+  .tour p{flex-basis:100%;order:-1}
+  .calc .result{order:-1}
+  .handoff{place-items:end center;padding:0}
+  .shopwin{border-radius:22px 22px 0 0;max-height:92%;padding-bottom:env(safe-area-inset-bottom,0px)}
+  .quad .qpt{width:104px;font-size:.72rem}
+}
